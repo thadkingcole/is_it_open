@@ -1,3 +1,4 @@
+// yelp API
 var myurl =
   "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=by-chloe&location=boston";
 
@@ -67,4 +68,21 @@ $.ajax({
       $("#results").append("<h5>We discovered no results!</h5>");
     }
   },
+});
+
+// covid api
+var settings = {
+  async: true,
+  crossDomain: true,
+  url:
+    "https://covid-19-statistics.p.rapidapi.com/reports?region_province=North%20Carolina&iso=USA&region_name=US&q=US%20North%20Carolina",
+  method: "GET",
+  headers: {
+    "x-rapidapi-host": "covid-19-statistics.p.rapidapi.com",
+    "x-rapidapi-key": "0f227271cfmsh1a5be0f784ee16ap17ae07jsndfa955b03b56",
+  },
+};
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
 });
