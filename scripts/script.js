@@ -37,30 +37,30 @@ $.ajax({
         // Append our result into our page
         $("#results").append(
           '<div id="' +
-            id +
-            '" style="margin-top:50px;margin-bottom:50px;"><img src="' +
-            image +
-            '" style="width:200px;height:150px;"><br>We found <b>' +
-            name +
-            "</b> (" +
-            alias +
-            ")<br>Business ID: " +
-            id +
-            "<br> Located at: " +
-            address +
-            " " +
-            city +
-            ", " +
-            state +
-            " " +
-            zipcode +
-            "<br>The phone number for this business is: " +
-            phone +
-            "<br>This business has a rating of " +
-            rating +
-            " with " +
-            reviewcount +
-            " reviews.</div>"
+          id +
+          '" style="margin-top:50px;margin-bottom:50px;"><img src="' +
+          image +
+          '" style="width:200px;height:150px;"><br>We found <b>' +
+          name +
+          "</b> (" +
+          alias +
+          ")<br>Business ID: " +
+          id +
+          "<br> Located at: " +
+          address +
+          " " +
+          city +
+          ", " +
+          state +
+          " " +
+          zipcode +
+          "<br>The phone number for this business is: " +
+          phone +
+          "<br>This business has a rating of " +
+          rating +
+          " with " +
+          reviewcount +
+          " reviews.</div>"
         );
       });
     } else {
@@ -70,19 +70,46 @@ $.ajax({
   },
 });
 
-// covid api
-var settings = {
-  async: true,
-  crossDomain: true,
-  url:
-    "https://covid-19-statistics.p.rapidapi.com/reports?region_province=North%20Carolina&iso=USA&region_name=US&q=US%20North%20Carolina",
-  method: "GET",
-  headers: {
-    "x-rapidapi-host": "covid-19-statistics.p.rapidapi.com",
-    "x-rapidapi-key": "0f227271cfmsh1a5be0f784ee16ap17ae07jsndfa955b03b56",
-  },
-};
+// Button on click function 
+$('.searchBtn').on('click', function (e) {
+  e.preventDefault()
+  const cityName = $('#citySearch').val();
+  const
 
-$.ajax(settings).done(function (response) {
-  console.log(response);
+  var settings = {
+    async: true,
+    crossDomain: true,
+    // covid api
+    url:
+      "https://covid-19-statistics.p.rapidapi.com/reports?region_province=" + cityName,
+
+    // "&iso=USA&region_name=US&q=US%20North%20Carolina",
+    method: "GET",
+    headers: {
+      "x-rapidapi-host": "covid-19-statistics.p.rapidapi.com",
+      "x-rapidapi-key": "0f227271cfmsh1a5be0f784ee16ap17ae07jsndfa955b03b56",
+
+    },
+  };
+
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+    console.log(response.data[0].region.cities)
+    // response.data[0].deaths
+
+    // const myArray = [{ x: 100 }, { x: 200 }, { x: 300 }];
+
+    // myArray.forEach((element, index, array) => {
+    //   console.log(element.x); // 100, 200, 300
+    //   console.log(index); // 0, 1, 2
+    //   console.log(array);
+
+    //   for (var i = 0; i < myArray.length; i++){
+
+    //     console.log(myArray[i]);
+  });
+
+
 });
+
+
