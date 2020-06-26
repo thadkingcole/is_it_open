@@ -1,5 +1,7 @@
+// Global Variables
 const locationName = "raleigh"; // taken from search form
 const categories = "restaurants,bars,parks";
+const yelpLimit = 8; // 8 appears to be the max requests that can be made at a time
 // headers object used in yelp api ajax call
 const yelpHeaders = {
   Authorization:
@@ -14,9 +16,13 @@ function yelpOpenStatus(businessID) {
     headers: yelpHeaders,
     method: "GET",
     dataType: "json",
-    success: function (data) {
-      console.log(data);
-      const openStatus = data.hours[0].is_open_now
+    success: function (response) {
+      // return string depending on whether business is current open
+      if (response.hours[0].is_open_now) {
+        $("#" + businessID).append($("<p>").text("IS OPEN NOW!"));
+      } else {
+        $("#" + businessID).append($("<p>").text("is closed now."));
+      }
     },
   });
 }
@@ -24,7 +30,7 @@ function yelpOpenStatus(businessID) {
 function yelpSearch(locationStr, catsStr) {
   // construct the initial search term using yelp buesinesses/search API
   // https://www.yelp.com/developers/documentation/v3/business_search
-  const businessSearchURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=${locationStr}&categories=${catsStr}`;
+  const businessSearchURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=${locationStr}&categories=${catsStr}&limit=${yelpLimit}`;
 
   $.ajax({
     url: businessSearchURL,
@@ -32,14 +38,11 @@ function yelpSearch(locationStr, catsStr) {
     method: "GET",
     dataType: "json",
     success: function (data) {
-      console.log(data);
       // Grab the results from the API JSON return
       const totalresults = data.total;
       // get lat and long of search area
       const latitude = data.region.center.latitude;
       const longitude = data.region.center.longitude;
-
-      yelpOpenStatus(data.businesses[0].id);
       // If our results are greater than 0, continue
       if (totalresults > 0) {
         // Display a header on the page with the number of results
@@ -50,7 +53,6 @@ function yelpSearch(locationStr, catsStr) {
         $.each(data.businesses, function (i, item) {
           // Store each business's object in a variable
           const id = item.id;
-          const alias = item.alias;
           const phone = item.display_phone;
           const image = item.image_url;
           const name = item.name;
@@ -60,19 +62,18 @@ function yelpSearch(locationStr, catsStr) {
           const city = item.location.city;
           const state = item.location.state;
           const zipcode = item.location.zip_code;
+          // start other yelp API call to find open status
+          yelpOpenStatus(id);
+
           // Append our result into our page
           $("#results").append(
             '<div id="' +
               id +
               '" style="margin-top:50px;margin-bottom:50px;"><img src="' +
               image +
-              '" style="width:200px;height:150px;"><br>We found <b>' +
+              '" style="width:200px;height:150px;"><br><b>' +
               name +
-              "</b> (" +
-              alias +
-              ")<br>Business ID: " +
-              id +
-              "<br> Located at: " +
+              "</b><br> Located at: " +
               address +
               " " +
               city +
@@ -86,7 +87,7 @@ function yelpSearch(locationStr, catsStr) {
               rating +
               " with " +
               reviewcount +
-              " reviews.</div>"
+              " reviews.<br>"
           );
         });
       } else {
