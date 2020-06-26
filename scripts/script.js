@@ -1,4 +1,4 @@
-var myurl =
+let myurl =
   "https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?term=by-chloe&location=boston";
 
 $.ajax({
@@ -12,7 +12,7 @@ $.ajax({
   success: function (data) {
     console.log(data);
     // Grab the results from the API JSON return
-    var totalresults = data.total;
+    let totalresults = data.total;
     // If our results are greater than 0, continue
     if (totalresults > 0) {
       // Display a header on the page with the number of results
@@ -22,44 +22,44 @@ $.ajax({
       // Itirate through the JSON array of 'businesses' which was returned by the API
       $.each(data.businesses, function (i, item) {
         // Store each business's object in a variable
-        var id = item.id;
-        var alias = item.alias;
-        var phone = item.display_phone;
-        var image = item.image_url;
-        var name = item.name;
-        var rating = item.rating;
-        var reviewcount = item.review_count;
-        var address = item.location.address1;
-        var city = item.location.city;
-        var state = item.location.state;
-        var zipcode = item.location.zip_code;
+        let id = item.id;
+        let alias = item.alias;
+        let phone = item.display_phone;
+        let image = item.image_url;
+        let name = item.name;
+        let rating = item.rating;
+        let reviewcount = item.review_count;
+        let address = item.location.address1;
+        let city = item.location.city;
+        let state = item.location.state;
+        let zipcode = item.location.zip_code;
         // Append our result into our page
         $("#results").append(
           '<div id="' +
-            id +
-            '" style="margin-top:50px;margin-bottom:50px;"><img src="' +
-            image +
-            '" style="width:200px;height:150px;"><br>We found <b>' +
-            name +
-            "</b> (" +
-            alias +
-            ")<br>Business ID: " +
-            id +
-            "<br> Located at: " +
-            address +
-            " " +
-            city +
-            ", " +
-            state +
-            " " +
-            zipcode +
-            "<br>The phone number for this business is: " +
-            phone +
-            "<br>This business has a rating of " +
-            rating +
-            " with " +
-            reviewcount +
-            " reviews.</div>"
+          id +
+          '" style="margin-top:50px;margin-bottom:50px;"><img src="' +
+          image +
+          '" style="width:200px;height:150px;"><br>We found <b>' +
+          name +
+          "</b> (" +
+          alias +
+          ")<br>Business ID: " +
+          id +
+          "<br> Located at: " +
+          address +
+          " " +
+          city +
+          ", " +
+          state +
+          " " +
+          zipcode +
+          "<br>The phone number for this business is: " +
+          phone +
+          "<br>This business has a rating of " +
+          rating +
+          " with " +
+          reviewcount +
+          " reviews.</div>"
         );
       });
     } else {
