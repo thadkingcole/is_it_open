@@ -17,6 +17,7 @@ function yelpOpenStatus(businessID) {
     method: "GET",
     dataType: "json",
     success: function (response) {
+      console.log("yelp business", response);
       // return string depending on whether business is current open
       if (response.hours[0].is_open_now) {
         $("#" + businessID).append($("<p>").text("IS OPEN NOW!"));
@@ -45,7 +46,7 @@ function covidAPI(location) {
   };
 
   $.ajax(settings).done(function (response) {
-    console.log(response);
+    console.log("covid", response);
     console.log(response.data[0].region.cities);
     // response.data[0].deaths
 
@@ -73,6 +74,7 @@ function yelpSearch(locationStr, catsStr) {
     method: "GET",
     dataType: "json",
     success: function (data) {
+      console.log("yelp initial", data);
       // Grab the results from the API JSON return
       const totalresults = data.total;
       // get lat and long of search area
