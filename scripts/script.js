@@ -104,7 +104,7 @@ function yelpSearch(locationStr, catsStr) {
           $("#results").append(
             '<div id="' +
               id +
-              '" style="margin-top:50px;margin-bottom:50px;"><img src="' +
+              '" class="resultsBox"><img src="' +
               image +
               '" style="width:200px;height:150px;"><br><b>' +
               name +
@@ -122,7 +122,7 @@ function yelpSearch(locationStr, catsStr) {
               rating +
               " with " +
               reviewcount +
-              " reviews.<br>"
+              " reviews.<br></div>"
           );
         });
       } else {
@@ -135,7 +135,6 @@ function yelpSearch(locationStr, catsStr) {
 
 // Main
 $("input.button-primary").click(function (event) {
-  event.preventDefault(); // just in case
   // clear div so that duplicates do not appear from multiple searches
   $("#results").empty();
   const searchLocation = $("#searchBox").val().trim(); // from form
