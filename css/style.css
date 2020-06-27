@@ -38,7 +38,14 @@
 
 
 
-
+@media (min-width: 400px) {
+    #covidBanner{
+        margin: 0px;
+    }
+    .covid {
+        margin: 0px;
+    }
+}
 
 
 
