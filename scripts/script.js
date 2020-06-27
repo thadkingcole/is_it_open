@@ -8,6 +8,7 @@ const yelpHeaders = {
     "Bearer TkYGxqcV6sGmv3RJSbT79S5bzAJdB2CRgJoEWmuGvd-Z9I5FRFzJ8VoQWGIGETFof5BJUGUQsWO6LqgwLscK6sEeLrbWthDRBzdIDuE3RynssWvbTg7szQ6oWvvzXnYx",
 };
 
+// Functions
 function yelpOpenStatus(businessID) {
   // construct business details from
   const businessesURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/${businessID}`;
@@ -99,6 +100,7 @@ function yelpSearch(locationStr, catsStr) {
   });
 }
 
+// Main
 $("input.button-primary").click(function (event) {
   event.preventDefault(); // just in case
   // clear div so that duplicates do not appear from multiple searches
