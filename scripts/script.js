@@ -1,7 +1,7 @@
 // Global Variables
 const locationName = "raleigh"; // taken from search form
 const categories = "restaurants,bars,parks";
-const yelpLimit = 8; // 8 appears to be the max requests that can be made at a time
+const yelpLimit = 5; // 8 appears to be the max requests that can be made at a time
 // headers object used in yelp api ajax call
 const yelpHeaders = {
   Authorization:
@@ -9,6 +9,7 @@ const yelpHeaders = {
 };
 
 function yelpOpenStatus(businessID) {
+  // construct business details from
   const businessesURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/${businessID}`;
 
   $.ajax({
@@ -98,4 +99,25 @@ function yelpSearch(locationStr, catsStr) {
   });
 }
 
-yelpSearch(locationName, categories);
+$("input.button-primary").click(function (event) {
+  event.preventDefault(); // just in case
+  // clear div so that duplicates do not appear from multiple searches
+  $("#results").empty();
+  const searchLocation = $("#searchBox").val().trim(); // from form
+  let cats = ""; // categories
+  $.each($("input[type='checkbox']:checked"), function () {
+    cats += $(this).val() + ","; // add each checked category
+  });
+  // remove extra comma at end of category string cats
+  if (cats.endsWith(",")) {
+    const categories = cats.substr(0, cats.length - 1);
+    console.log(searchLocation, categories);
+    yelpSearch(searchLocation, categories);
+  } else {
+    // TODO change the alert to a modal. alerts not allowed
+    alert(
+      "please select at least one category\n\n" +
+        "change this to a modal".toUpperCase()
+    );
+  }
+});
