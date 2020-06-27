@@ -1,6 +1,4 @@
 // Global Variables
-const locationName = "raleigh"; // taken from search form
-const categories = "restaurants,bars,parks";
 const yelpLimit = 5; // 5 appears to be the max requests that can be made at a time
 // headers object used in yelp api ajax call
 const yelpHeaders = {
@@ -26,6 +24,41 @@ function yelpOpenStatus(businessID) {
         $("#" + businessID).append($("<p>").text("is closed now."));
       }
     },
+  });
+}
+
+function covidAPI(location) {
+  var settings = {
+    async: true,
+    crossDomain: true,
+    // covid api
+    url:
+      "https://covid-19-statistics.p.rapidapi.com/reports?region_province=" +
+      cityName,
+
+    // "&iso=USA&region_name=US&q=US%20North%20Carolina",
+    method: "GET",
+    headers: {
+      "x-rapidapi-host": "covid-19-statistics.p.rapidapi.com",
+      "x-rapidapi-key": "0f227271cfmsh1a5be0f784ee16ap17ae07jsndfa955b03b56",
+    },
+  };
+
+  $.ajax(settings).done(function (response) {
+    console.log(response);
+    console.log(response.data[0].region.cities);
+    // response.data[0].deaths
+
+    // const myArray = [{ x: 100 }, { x: 200 }, { x: 300 }];
+
+    // myArray.forEach((element, index, array) => {
+    //   console.log(element.x); // 100, 200, 300
+    //   console.log(index); // 0, 1, 2
+    //   console.log(array);
+
+    //   for (var i = 0; i < myArray.length; i++){
+
+    //     console.log(myArray[i]);
   });
 }
 
@@ -113,7 +146,6 @@ $("input.button-primary").click(function (event) {
   // remove extra comma at end of category string cats
   if (cats.endsWith(",")) {
     const categories = cats.substr(0, cats.length - 1);
-    console.log(searchLocation, categories);
     yelpSearch(searchLocation, categories);
   } else {
     // TODO change the alert to a modal. alerts not allowed
@@ -124,46 +156,8 @@ $("input.button-primary").click(function (event) {
   }
 });
 
-// Button on click function 
-$('.searchBtn').on('click', function (e) {
-  e.preventDefault()
-  const cityName = $('#citySearch').val();
-  const
-
-  var settings = {
-    async: true,
-    crossDomain: true,
-    // covid api
-    url:
-      "https://covid-19-statistics.p.rapidapi.com/reports?region_province=" + cityName,
-
-    // "&iso=USA&region_name=US&q=US%20North%20Carolina",
-    method: "GET",
-    headers: {
-      "x-rapidapi-host": "covid-19-statistics.p.rapidapi.com",
-      "x-rapidapi-key": "0f227271cfmsh1a5be0f784ee16ap17ae07jsndfa955b03b56",
-
-    },
-  };
-
-  $.ajax(settings).done(function (response) {
-    console.log(response);
-    console.log(response.data[0].region.cities)
-    // response.data[0].deaths
-
-    // const myArray = [{ x: 100 }, { x: 200 }, { x: 300 }];
-
-    // myArray.forEach((element, index, array) => {
-    //   console.log(element.x); // 100, 200, 300
-    //   console.log(index); // 0, 1, 2
-    //   console.log(array);
-
-    //   for (var i = 0; i < myArray.length; i++){
-
-    //     console.log(myArray[i]);
-  });
-
-
+// Button on click function
+$(".searchBtn").on("click", function (e) {
+  e.preventDefault();
+  // const cityName = $("#citySearch").val();
 });
-
-
