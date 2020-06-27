@@ -1,23 +1,88 @@
 .container {
-    background-color: #eddcd2;
+    background-color: #ddbea9;
+    
 
 }
 .main {
     padding: 3px;
-    background-color: #fff1e6;
+    background-color: #eddcd2;
+    
 }
 .checkBox {
-    margin: 0px 8px 0px 8px;
     text-align: center;
-
+    zoom: 2;
+    margin: 0px;
+}
+.checkboxes {
+    display: block;
 }
 .title {
     background-color: #b7b7a4;
     text-align: center;
     border-radius: 5px;
-    margin: 3px;
-    margin-top: 5px;
     color: white;
     padding: 5px;
 }
+#covidBanner {
+    border: 1px #f0efeb groove;
+    padding: 5px 0px 5px 5px;
+    background-color: #f0efeb;
+    border-radius: 5px;
+}
+#resultsBanner {
+    border: 1px #f0efeb groove;
+    padding: 5px 0px 5px 5px;
+    background-color: #f0efeb;
+    border-radius: 5px;
+}
 
+
+
+@media (min-width: 400px) {
+    #covidBanner{
+        margin: 0px;
+    }
+    .covid {
+        margin: 0px;
+    }
+}
+
+
+
+
+@media (min-width: 750px) {
+.container {
+    background-color: #ddbea9;
+    margin: auto;
+}
+.main {
+    background-color: #eddcd2;
+}
+.row-main {
+    display: flex;
+    
+}
+.search {
+    display: flex;
+    flex-direction: column;
+    
+    padding: 10px;
+    
+    
+}
+.checkBox {
+    zoom: 0;
+}
+.checkboxes {
+    display: initial;
+}
+#covidBanner {
+    margin: 0px;
+}
+.covid {
+    margin: 0px;
+}
+#resultArea {
+    padding: 10px;
+}
+}
