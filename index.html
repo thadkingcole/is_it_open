@@ -12,42 +12,43 @@
 
 <body>
     <div class="container" id="container">
-        <div class="row main">
-            <div class="row title">
-                <h1>Is it Open?</h1>
-            </div>
-            <div class="row">
+
+        <div class="row title">
+            <h1>Is it Open?</h1>
+        </div>
+
+        <div class="row-main">
+
+            <div class="row search">
                 <div class="four column">
-                    <label for="searchBox">Search</label>
-                    <input class="u-full-width" type="text" id="searchBox">
+                    <input class="u-full-width" type="text" id="searchBox" placeholder="Enter a City">
                 </div>
-            </div>
-            <div class="row">
-                <div class="four column">
-                    <label class="example-send-yourself-copy">
+
+
+                <div class="four column checkBox">
+                    <label class="checkboxes">
                         <input type="checkbox" value="restaurants">
-                        <span class="label-body checkBox">Restaurants</span>
+                        <span class="label-body">Restaurants</span>
                         <input type="checkbox" value="bars">
-                        <span class="label-body checkBox">Bars</span>
+                        <span class="label-body">Bars</span>
                         <input type="checkbox" value="parks">
-                        <span class="label-body checkBox">Parks</span>
+                        <span class="label-body">Parks</span>
                     </label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="four column">
                     <input class="button-primary" type="submit" value="Search">
                 </div>
-            </div>
-            <div class="row" id="covidArea">
-                <div class="four column">
-                    <h3>COVID19 Data:</h3>
+
+                <div class="four column covid">
+                    <h3 id="covidBanner">COVID19 Data:</h3>
                     <hr>
                 </div>
+
             </div>
+
+
+
             <div class="row">
-                <div class="four column" id="resultArea">
-                    <h3>Results:</h3>
+                <div class="four column results" id="resultArea">
+                    <h3 id="resultsBanner">Results:</h3>
                     <hr>
                     <div id="results">
 
