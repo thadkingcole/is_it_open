@@ -1,55 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Basic Page Needs
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <meta charset="utf-8" />
-    <title>Your page title here :)</title>
-    <meta name="description" content="" />
-    <meta name="author" content="" />
 
-    <!-- Mobile Specific Metas
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/skeleton.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Is it Open?</title>
+</head>
 
-    <!-- FONT
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link
-      href="//fonts.googleapis.com/css?family=Raleway:400,300,600"
-      rel="stylesheet"
-      type="text/css"
-    />
+<body>
+    <div class="container" id="container">
+        <div class="row main">
+            <div class="row title">
+                <h1>Is it Open?</h1>
+            </div>
+            <div class="row">
+                <div class="four column">
+                    <label for="searchBox">Search</label>
+                    <input class="u-full-width" type="text" id="searchBox">
+                </div>
+            </div>
+            <div class="row">
+                <div class="four column">
+                    <label class="example-send-yourself-copy">
+                        <input type="checkbox" value="restaurants">
+                        <span class="label-body checkBox">Restaurants</span>
+                        <input type="checkbox" value="bars">
+                        <span class="label-body checkBox">Bars</span>
+                        <input type="checkbox" value="parks">
+                        <span class="label-body checkBox">Parks</span>
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="four column">
+                    <input class="button-primary" type="submit" value="Search">
+                </div>
+            </div>
+            <div class="row" id="covidArea">
+                <div class="four column">
+                    <h3>COVID19 Data:</h3>
+                    <hr>
+                </div>
+            </div>
+            <div class="row">
+                <div class="four column" id="resultArea">
+                    <h3>Results:</h3>
+                    <hr>
+                    <div id="results">
 
-    <!-- CSS
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="stylesheet" href="css/normalize.css" />
-    <link rel="stylesheet" href="css/skeleton.css" />
-
-    <!-- Favicon
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="icon" type="image/png" href="images/favicon.png" />
-  </head>
-  <body>
-    <!-- Primary Page Layout
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <div class="container">
-      <div class="row">
-        <div class="one-half column" style="margin-top: 25%;">
-          <h4>Basic Page</h4>
-          <p>
-            This index.html page is a placeholder with the CSS, font and
-            favicon. It's just waiting for you to add some content! If you need
-            some help hit up the
-            <a href="http://www.getskeleton.com">Skeleton documentation</a>.
-          </p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    <div id="results"></div>
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="scripts/script.js"></script>
+</body>
 
-    <!-- End Document
-  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  </body>
 </html>
