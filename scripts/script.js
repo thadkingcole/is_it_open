@@ -8,7 +8,8 @@ const yelpHeaders = {
 
 // Functions
 function yelpOpenStatus(businessID) {
-  // construct business details from
+  // construct business details from yelp businesses/{id} API
+  // https://www.yelp.com/developers/documentation/v3/business
   const businessesURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/${businessID}`;
 
   $.ajax({
@@ -28,16 +29,12 @@ function yelpOpenStatus(businessID) {
   });
 }
 
-function covidAPI(location) {
-  var settings = {
+function covidAPI(state, latitude, longitude) {
+  const settings = {
     async: true,
     crossDomain: true,
     // covid api
-    url:
-      "https://covid-19-statistics.p.rapidapi.com/reports?region_province=" +
-      cityName,
-
-    // "&iso=USA&region_name=US&q=US%20North%20Carolina",
+    url: `https://covid-19-statistics.p.rapidapi.com/reports?region_province=${state}`,
     method: "GET",
     headers: {
       "x-rapidapi-host": "covid-19-statistics.p.rapidapi.com",
@@ -47,24 +44,74 @@ function covidAPI(location) {
 
   $.ajax(settings).done(function (response) {
     console.log("covid", response);
-    console.log(response.data[0].region.cities);
-    // response.data[0].deaths
-
-    // const myArray = [{ x: 100 }, { x: 200 }, { x: 300 }];
-
-    // myArray.forEach((element, index, array) => {
-    //   console.log(element.x); // 100, 200, 300
-    //   console.log(index); // 0, 1, 2
-    //   console.log(array);
-
-    //   for (var i = 0; i < myArray.length; i++){
-
-    //     console.log(myArray[i]);
+    // array of county data
+    const counties = response.data[0].region.cities;
+    // number to compare distance from each county center
+    // start at infinity so that first county compared will be chosen to start future comparisons
+    let latLongDiff = Infinity;
+    // create object to save results of closest county
+    const countyData = {
+      name: "",
+      totalCases: 0,
+      casesDiff: 0,
+      totalDeaths: 0,
+      deathDiff: 0,
+      date: "last update",
+      since: "today",
+    };
+    // cycle through each county to find the county closest to the location the user searched yelp
+    counties.forEach((county) => {
+      // get coordinates for each county
+      const latDiff = county.lat - latitude;
+      const longDiff = county.long - longitude;
+      // compare coordinate difference to the current closest county
+      // recall dist_between_points = sqrt(x^2 + y^2)
+      if (Math.sqrt(latDiff ** 2 + longDiff ** 2) < latLongDiff) {
+        // update comparison value with new diff
+        latLongDiff = Math.sqrt(latDiff ** 2 + longDiff ** 2);
+        // update data to be posted later
+        countyData.name = county.name;
+        countyData.totalCases = county.confirmed;
+        countyData.casesDiff = county.confirmed_diff;
+        countyData.totalDeaths = county.deaths;
+        countyData.deathDiff = county.deaths_diff;
+        countyData.date = county.last_update;
+        countyData.since = county.date;
+      }
+    });
+    console.log(countyData, latLongDiff);
+    // post covid data for county on page
+    // county name
+    $("#covidResults").append($("<h4>").text(`${countyData.name} County`));
+    // date of last update
+    $("#covidResults").append($("<p>").text(`As of ${countyData.date}`));
+    // create list for data
+    const covidListEl = $("<ul>");
+    // total cases
+    covidListEl.append($("<li>").text(`Total Cases: ${countyData.totalCases}`));
+    // new cases since last update
+    covidListEl.append(
+      $("<li>").text(
+        `New Cases: ${countyData.casesDiff} since ${countyData.since}`
+      )
+    );
+    // total deaths
+    covidListEl.append(
+      $("<li>").text(`Total Deaths: ${countyData.totalDeaths}`)
+    );
+    // new deaths since last update
+    covidListEl.append(
+      $("<li>").text(
+        `New Deaths: ${countyData.deathDiff} since ${countyData.since}`
+      )
+    );
+    // append list to page
+    $("#covidResults").append(covidListEl);
   });
 }
 
 function yelpSearch(locationStr, catsStr) {
-  // construct the initial search term using yelp buesinesses/search API
+  // construct the initial search term using yelp businesses/search API
   // https://www.yelp.com/developers/documentation/v3/business_search
   const businessSearchURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=${locationStr}&categories=${catsStr}&limit=${yelpLimit}`;
 
@@ -80,6 +127,8 @@ function yelpSearch(locationStr, catsStr) {
       // get lat and long of search area
       const latitude = data.region.center.latitude;
       const longitude = data.region.center.longitude;
+      //
+      covidAPI("north carolina", latitude, longitude);
       // If our results are greater than 0, continue
       if (totalresults > 0) {
         // Display a header on the page with the number of results
@@ -136,6 +185,7 @@ function yelpSearch(locationStr, catsStr) {
 }
 
 // Main
+// search button event listener
 $("input.button-primary").click(function (event) {
   // clear div so that duplicates do not appear from multiple searches
   $("#results").empty();
@@ -155,10 +205,4 @@ $("input.button-primary").click(function (event) {
         "change this to a modal".toUpperCase()
     );
   }
-});
-
-// Button on click function
-$(".searchBtn").on("click", function (e) {
-  e.preventDefault();
-  // const cityName = $("#citySearch").val();
 });
