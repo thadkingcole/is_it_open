@@ -91,6 +91,8 @@ function covidAPI(state, latitude, longitude) {
       }
     });
     // post covid data on page
+    // first, clear out data already displayed
+    $("#covidResults").empty();
 
     // county name
     $("#covidResults").append($("<h4>").text(`${countyData.name} County`));
@@ -155,11 +157,70 @@ function covidAPI(state, latitude, longitude) {
     );
     // fatality rate
     stateList.append(
-      $("<li>").text(`Fatality Rate: ${stateData.fatalityRate}`)
+      $("<li>").text(`Fatality Rate: ${stateData.fatalityRate * 100}%`)
     );
     // add list to page
     $("#covidResults").append(stateList);
   });
+}
+
+function abbrToState(stateAbbr) {
+  // takes 2 letter state abbreviation
+  // returns full state name
+  const stateAbbrs = {
+    AL: "Alabama",
+    AK: "Alaska",
+    AZ: "Arizona",
+    AR: "Arkansas",
+    CA: "California",
+    CO: "Colorado",
+    CT: "Connecticut",
+    DE: "Delaware",
+    DC: "District of Columbia",
+    FL: "Florida",
+    GA: "Georgia",
+    HI: "Hawaii",
+    ID: "Idaho",
+    IL: "Illinois",
+    IN: "Indiana",
+    IA: "Iowa",
+    KS: "Kansas",
+    KY: "Kentucky",
+    LA: "Louisiana",
+    ME: "Maine",
+    MD: "Maryland",
+    MA: "Massachusetts",
+    MI: "Michigan",
+    MN: "Minnesota",
+    MS: "Mississippi",
+    MO: "Missouri",
+    MT: "Montana",
+    NE: "Nebraska",
+    NV: "Nevada",
+    NH: "New Hampshire",
+    NJ: "New Jersey",
+    NM: "New Mexico",
+    NY: "New York",
+    NC: "North Carolina",
+    ND: "North Dakoda",
+    OH: "Ohio",
+    OK: "Oklahoma",
+    OR: "Oregon",
+    PA: "Pennsylvania",
+    RI: "Rhode Island",
+    SC: "South Carolina",
+    SD: "South Dakota",
+    TN: "Tennessee",
+    TX: "Texas",
+    UT: "Utah",
+    VT: "Vermont",
+    VA: "Virginia",
+    WA: "Washington",
+    WV: "West Virginia",
+    WI: "Wisconsin",
+    WY: "Wyoming",
+  };
+  return stateAbbrs[stateAbbr];
 }
 
 function yelpSearch(locationStr, catsStr) {
@@ -175,11 +236,12 @@ function yelpSearch(locationStr, catsStr) {
     success: function (data) {
       // Grab the results from the API JSON return
       const totalresults = data.total;
-      // get lat and long of search area
+      // get lat and long of search area for covidAPI
       const latitude = data.region.center.latitude;
       const longitude = data.region.center.longitude;
-      //
-      covidAPI("north carolina", latitude, longitude);
+      // get state for covidAPI
+      const state = data.businesses[0].location.state;
+      covidAPI(abbrToState(state), latitude, longitude);
       // If our results are greater than 0, continue
       if (totalresults > 0) {
         // Display a header on the page with the number of results
