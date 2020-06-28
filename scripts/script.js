@@ -18,7 +18,6 @@ function yelpOpenStatus(businessID) {
     method: "GET",
     dataType: "json",
     success: function (response) {
-      console.log("yelp business", response);
       // return string depending on whether business is current open
       if (response.hours[0].is_open_now) {
         $("#" + businessID).append($("<p>").text("IS OPEN NOW!"));
@@ -43,7 +42,19 @@ function covidAPI(state, latitude, longitude) {
   };
 
   $.ajax(settings).done(function (response) {
-    console.log("covid", response);
+    // get state data
+    const stateData = {
+      name: response.data[0].region.province,
+      totalActive: response.data[0].active,
+      activeDiff: response.data[0].active_diff,
+      totalConfirmed: response.data[0].confirmed,
+      confirmedDiff: response.data[0].confirmed_diff,
+      totalDeaths: response.data[0].deaths,
+      deathDiff: response.data[0].deaths_diff,
+      date: response.data[0].last_update,
+      since: response.data[0].date,
+      fatalityRate: response.data[0].fatality_rate,
+    };
     // array of county data
     const counties = response.data[0].region.cities;
     // number to compare distance from each county center
@@ -79,34 +90,75 @@ function covidAPI(state, latitude, longitude) {
         countyData.since = county.date;
       }
     });
-    console.log(countyData, latLongDiff);
-    // post covid data for county on page
+    // post covid data on page
+
     // county name
     $("#covidResults").append($("<h4>").text(`${countyData.name} County`));
     // date of last update
     $("#covidResults").append($("<p>").text(`As of ${countyData.date}`));
-    // create list for data
-    const covidListEl = $("<ul>");
+    // create list for county data
+    const countyList = $("<ul>");
     // total cases
-    covidListEl.append($("<li>").text(`Total Cases: ${countyData.totalCases}`));
+    countyList.append($("<li>").text(`Total Cases: ${countyData.totalCases}`));
     // new cases since last update
-    covidListEl.append(
+    countyList.append(
       $("<li>").text(
         `New Cases: ${countyData.casesDiff} since ${countyData.since}`
       )
     );
     // total deaths
-    covidListEl.append(
+    countyList.append(
       $("<li>").text(`Total Deaths: ${countyData.totalDeaths}`)
     );
     // new deaths since last update
-    covidListEl.append(
+    countyList.append(
       $("<li>").text(
         `New Deaths: ${countyData.deathDiff} since ${countyData.since}`
       )
     );
     // append list to page
-    $("#covidResults").append(covidListEl);
+    $("#covidResults").append(countyList);
+
+    // start state data with state name
+    $("#covidResults").append($("<h4>").text(stateData.name));
+    // date of last update
+    $("#covidResults").append($("<p>").text(`As of ${stateData.date}`));
+    // create list for state data
+    const stateList = $("<ul>");
+    // total active cases
+    stateList.append(
+      $("<li>").text(`Total Active Cases: ${stateData.totalActive}`)
+    );
+    // new active cases since last update
+    stateList.append(
+      $("<li>").text(
+        `New Active Cases: ${stateData.activeDiff} since ${stateData.since}`
+      )
+    );
+    // total confirmed cases
+    stateList.append(
+      $("<li>").text(`Total Confirmed Cases: ${stateData.totalConfirmed}`)
+    );
+    // new confirmed cases since last update
+    stateList.append(
+      $("<li>").text(
+        `New Confirmed Cases: ${stateData.confirmedDiff} since ${stateData.since}`
+      )
+    );
+    // total deaths
+    stateList.append($("<li>").text(`Total Deaths: ${stateData.totalDeaths}`));
+    // new deaths since last update
+    stateList.append(
+      $("<li>").text(
+        `New Deaths: ${stateData.deathDiff} since ${stateData.since}`
+      )
+    );
+    // fatality rate
+    stateList.append(
+      $("<li>").text(`Fatality Rate: ${stateData.fatalityRate}`)
+    );
+    // add list to page
+    $("#covidResults").append(stateList);
   });
 }
 
@@ -121,7 +173,6 @@ function yelpSearch(locationStr, catsStr) {
     method: "GET",
     dataType: "json",
     success: function (data) {
-      console.log("yelp initial", data);
       // Grab the results from the API JSON return
       const totalresults = data.total;
       // get lat and long of search area
