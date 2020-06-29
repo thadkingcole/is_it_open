@@ -42,34 +42,33 @@
 
         </div>
         <div class="container" id="container">
-
-            <div class="row title">
-                <h1>Is it Open?</h1>
-            </div>
-
             <div class="row-main">
 
                 <div class="row search">
                     <div class="four column">
-                        <input class="u-full-width" type="text" id="searchBox" placeholder="Enter a City">
+                        <h1 class="title">Is it Open?</h1>
+                        <input class="u-full-width searchText" type="text" id="searchBox"
+                            placeholder="Enter a City, State, place, zipcode, or address">
                     </div>
 
-
                     <div class="four column checkBox">
-                        <label class="checkboxes">
+                        <label class="checkboxes">Restaurants
                             <input type="checkbox" value="restaurants">
-                            <span class="label-body">Restaurants</span>
+                            <span class="label-body"></span>
+                        </label>
+                        <label class="checkboxes">Bars
                             <input type="checkbox" value="bars">
-                            <span class="label-body">Bars</span>
+                            <span class="label-body"></span>
+                        </label>
+                        <label class="checkboxes">Parks
                             <input type="checkbox" value="parks">
-                            <span class="label-body">Parks</span>
+                            <span class="label-body"></span>
                         </label>
                         <input class="button-primary" type="submit" value="Search">
                     </div>
 
                     <div class="four column covid">
                         <h3 id="covidBanner">COVID19 Data:</h3>
-                        <hr>
                         <div id="covidResults">
                             <!-- covid data goes here -->
                         </div>
@@ -79,10 +78,9 @@
 
 
 
-                <div class="row">
+                <div class="row right">
                     <div class="four column results" id="resultArea">
                         <h3 id="resultsBanner">Results:</h3>
-                        <hr>
                         <div id="results">
                             <!-- yelp data goes here -->
                         </div>

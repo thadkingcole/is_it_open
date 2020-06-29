@@ -10,35 +10,38 @@
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-  }
-  .modal-content {
+}
+.modal-content {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
     width: 80%;
-  }
-  .close {
+}
+.close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
-  }
-  .close:hover,
-.close:focus {
+}
+.close:hover, .close:focus {
   color: #000;
   text-decoration: none;
   cursor: pointer;
 }
 .container {
-    background-color: #ddbea9;
-    
-    
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 3px;
+    color: #ccd5cb;
+    background-color: #256090;
+    border-radius: 20px;
+    border: 3px groove;
 
 }
 .main {
     padding: 3px;
-    background-color: #eddcd2;
+    background-color: #256090;
     
 }
 .checkBox {
@@ -50,38 +53,31 @@
     display: block;
 }
 .title {
-    background-color: #b7b7a4;
+    background-color: #256090;
     text-align: center;
-    border-radius: 5px;
+    border-radius: 20px;
     color: white;
     padding: 5px;
 }
+.search {
+    padding: 10px;
+}
 #covidBanner {
+    display: none;
     border: 1px #f0efeb groove;
-    padding: 5px 0px 5px 5px;
+    padding: 5px 0px 5px 0px;
     background-color: #f0efeb;
     border-radius: 5px;
+    color: #101102;
 }
 #resultsBanner {
+    color: #101102;
+    display: none;
     border: 1px #f0efeb groove;
-    padding: 5px 0px 5px 5px;
+    padding: 5px 0px 5px 0px;
     background-color: #f0efeb;
     border-radius: 5px;
 }
-
-
-
-@media (min-width: 400px) {
-    #covidBanner{
-        margin: 0px;
-    }
-    .covid {
-        margin: 0px;
-    }
-}
-
-
-
 
 img.bg {
     /* Set rules to fill background */
@@ -103,26 +99,49 @@ img.bg {
       left: 50%;
       margin-left: -512px;   /* 50% */
     }
-  }
+}
+.right {
+    display: none;
+}
+.searchText {
+    color: #101102;
+
+}
+
+@media (min-width: 400px) {
+    #covidBanner{
+        margin: 0px;
+        width: auto;
+    }
+    .covid {
+        margin: 0px;
+    }
+    #resultArea {
+        width: 100%;
+    }
+    .container {
+        margin-top: 10px;
+    }
+    
+}
 @media (min-width: 750px) {
 .container {
-    background-color: #ddbea9;
+    background-color: #256090;
     margin: auto;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    width: fit-content;
 }
 .main {
-    background-color: #eddcd2;
+    background-color: #256090;
 }
 .row-main {
     display: flex;
-    
 }
 .search {
     display: flex;
     flex-direction: column;
-    
-    padding: 10px;
-    
-    
+    padding: 10px; 
 }
 .checkBox {
     zoom: 0;
@@ -138,5 +157,6 @@ img.bg {
 }
 #resultArea {
     padding: 10px;
+    width: 367px;
 }
 }
