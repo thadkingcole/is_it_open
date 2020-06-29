@@ -9,7 +9,7 @@ const rapidAPIKey = "0f227271cfmsh1a5be0f784ee16ap17ae07jsndfa955b03b56";
 
 // Functions
 function covidInt(country) {
-  var settings = {
+  const settings = {
     async: true,
     crossDomain: true,
     url: `https://covid-19-data.p.rapidapi.com/country/code?format=json&code=${country}`,
