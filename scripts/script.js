@@ -5,37 +5,50 @@ const yelpHeaders = {
   Authorization:
     "Bearer TkYGxqcV6sGmv3RJSbT79S5bzAJdB2CRgJoEWmuGvd-Z9I5FRFzJ8VoQWGIGETFof5BJUGUQsWO6LqgwLscK6sEeLrbWthDRBzdIDuE3RynssWvbTg7szQ6oWvvzXnYx",
 };
+const rapidAPIKey = "0f227271cfmsh1a5be0f784ee16ap17ae07jsndfa955b03b56";
 
 // Functions
-function yelpOpenStatus(businessID) {
-  // construct business details from yelp businesses/{id} API
-  // https://www.yelp.com/developers/documentation/v3/business
-  const businessesURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/${businessID}`;
-
-  $.ajax({
-    url: businessesURL,
-    headers: yelpHeaders,
+function covidInt(country) {
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url: `https://covid-19-data.p.rapidapi.com/country/code?format=json&code=${country}`,
     method: "GET",
-    dataType: "json",
-    success: function (response) {
-      // return string depending on whether business is current open
-      // first, empty the p tag with open status if already created
-      $("#" + businessID + "status").empty();
-      // next, create an element for the business's open status
-      const openStatus = $("<p>").attr("id", "#" + businessID + "status");
-      // and put the open status in that element
-      if (response.hours[0].is_open_now) {
-        openStatus.text("IS OPEN NOW").css("color", "lime");
-      } else {
-        openStatus.text("IS CLOSED NOW").css("color", "#ff4d4d"); // light red
-      }
-      // append openStatus to the #businessID
-      $("#" + businessID).append(openStatus);
+    headers: {
+      "x-rapidapi-host": "covid-19-data.p.rapidapi.com",
+      "x-rapidapi-key": rapidAPIKey,
     },
+  };
+
+  $.ajax(settings).done(function (response) {
+    console.log("covid int", response);
+    const data = response[0];
+    const countryData = {
+      name: data.country, // name of country
+      lastChange: data.lastChange, // date & time data last changed
+      lastUpdate: data.lastUpdate, // data & time data was updated
+      confirmed: data.confirmed, // total confirmed cases
+      critical: data.critical, // total critical cases
+      deaths: data.deaths, // total deaths
+      recovered: data.recovered, // total cases recovered
+    };
+    $("#covidResults").empty(); // clears out data that may already be displayed
+    $("#covidResults").append($("<h4>").text(countryData.name)); // display country name
+    $("#covidResults").append($("<p>").text(`As of ${countryData.lastUpdate}`));
+    const countryList = $("<ul>"); // creates new unorderd list
+    // add data to list items appened to unordered list
+    countryList.append(
+      $("<li>").text(`Total Confirmed Cases: ${data.confirmed}`)
+    );
+    countryList.append($("<li>").text(`Total Critical Cases: ${data.critical}`));
+    countryList.append($("<li>").text(`Total Deaths: ${data.deaths}`));
+    countryList.append($("<li>").text(`Total Recovered: ${data.recovered}`));
+    // append list to page
+    $("#covidResults").append(countryList);
   });
 }
 
-function covidAPI(state, latitude, longitude) {
+function covidUS(state, latitude, longitude) {
   const settings = {
     async: true,
     crossDomain: true,
@@ -44,11 +57,12 @@ function covidAPI(state, latitude, longitude) {
     method: "GET",
     headers: {
       "x-rapidapi-host": "covid-19-statistics.p.rapidapi.com",
-      "x-rapidapi-key": "0f227271cfmsh1a5be0f784ee16ap17ae07jsndfa955b03b56",
+      "x-rapidapi-key": rapidAPIKey,
     },
   };
 
   $.ajax(settings).done(function (response) {
+    console.log("covid US", response);
     // get state data
     const stateData = {
       name: response.data[0].region.province,
@@ -230,6 +244,35 @@ function abbrToState(stateAbbr) {
   return stateAbbrs[stateAbbr];
 }
 
+function yelpOpenStatus(businessID) {
+  // construct business details from yelp businesses/{id} API
+  // https://www.yelp.com/developers/documentation/v3/business
+  const businessesURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/${businessID}`;
+
+  $.ajax({
+    url: businessesURL,
+    headers: yelpHeaders,
+    method: "GET",
+    dataType: "json",
+    success: function (response) {
+      console.log("yelp business", response);
+      // return string depending on whether business is current open
+      // first, empty the p tag with open status if already created
+      $("#" + businessID + "status").empty();
+      // next, create an element for the business's open status
+      const openStatus = $("<p>").attr("id", "#" + businessID + "status");
+      // and put the open status in that element
+      if (response.hours[0].is_open_now) {
+        openStatus.text("IS OPEN NOW").css("color", "lime");
+      } else {
+        openStatus.text("IS CLOSED NOW").css("color", "#ff4d4d"); // light red
+      }
+      // append openStatus to the #businessID
+      $("#" + businessID).append(openStatus);
+    },
+  });
+}
+
 function yelpSearch(locationStr, catsStr) {
   // construct the initial search term using yelp businesses/search API
   // https://www.yelp.com/developers/documentation/v3/business_search
@@ -241,17 +284,25 @@ function yelpSearch(locationStr, catsStr) {
     method: "GET",
     dataType: "json",
     success: function (data) {
+      console.log("yelp initial", data);
       // Grab the results from the API JSON return
       const totalresults = data.total;
-      // get lat and long of search area for covidAPI
-      const latitude = data.region.center.latitude;
-      const longitude = data.region.center.longitude;
-      // get state for covidAPI
-      const state = data.businesses[0].location.state;
-      covidAPI(abbrToState(state), latitude, longitude);
-      // If our results are greater than 0, continue
+      // get country of search
+      const country = data.businesses[0].location.country;
+      if (country === "US") {
+        // get lat and long of search area for covid API
+        const latitude = data.region.center.latitude;
+        const longitude = data.region.center.longitude;
+        // get state for covid API
+        const state = data.businesses[0].location.state;
+        covidUS(abbrToState(state), latitude, longitude);
+      } else {
+        // country isn't US. do international search
+        covidInt(country);
+      }
       // start by remove results that may already be displayed
       $("#results").empty();
+      // If our results are greater than 0, continue
       if (totalresults > 0) {
         // Display a header on the page with the number of results
         $("#results").append(
