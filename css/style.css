@@ -31,6 +31,7 @@
 }
 
 .container {
+    margin-top: 10px;
     padding: 3px;
     color: #ccd5cb;
     background-color: #256090;
@@ -62,14 +63,16 @@
     display: none;
     border: 1px #f0efeb groove;
     padding: 5px 0px 5px 0px;
-    background-color: #256090;
+    background-color: #f0efeb;
     border-radius: 5px;
+    color: #101102;
 }
 #resultsBanner {
+    color: #101102;
     display: none;
     border: 1px #f0efeb groove;
     padding: 5px 0px 5px 0px;
-    background-color: #256090;
+    background-color: #f0efeb;
     border-radius: 5px;
 }
 
@@ -113,12 +116,16 @@ img.bg {
     #resultArea {
         width: 100%;
     }
+    .container {
+        margin-top: ;
+    }
     
 }
 @media (min-width: 750px) {
 .container {
     background-color: #256090;
     margin: auto;
+    margin-top: 25px;
     width: fit-content;
 }
 .main {

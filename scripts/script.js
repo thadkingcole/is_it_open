@@ -316,6 +316,10 @@ $("input.button-primary").click(function (event) {
   $.each($("input[type='checkbox']:checked"), function () {
     cats += $(this).val() + ","; // add each checked category
   });
+  $('#covidBanner').css('display', 'flex');
+  $('#resultsBanner').css('display', 'flex');
+  $('.right').css('display', 'block');
+
   // remove extra comma at end of category string cats
   if (cats.endsWith(",")) {
     const categories = cats.substr(0, cats.length - 1);
@@ -328,7 +332,5 @@ $("input.button-primary").click(function (event) {
     $('#resultsBanner').css('display', 'none');
     $('.right').css('display', 'none');
   }
-  $('#covidBanner').css('display', 'flex');
-  $('#resultsBanner').css('display', 'flex');
-  $('.right').css('display', 'block');
+
 });
