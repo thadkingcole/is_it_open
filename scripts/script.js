@@ -311,10 +311,8 @@ function yelpSearch(locationStr, catsStr) {
 
 // Main
 // search button event listener
-$("input.button-primary").click(function (event) {
+$("input.button-primary").click(function () {
   const searchLocation = $("#searchBox").val().trim(); // from form
-  let modal = $('#myModal');
-  let span = $('.span');
   let cats = ""; // categories
   $.each($("input[type='checkbox']:checked"), function () {
     cats += $(this).val() + ","; // add each checked category
