@@ -307,7 +307,6 @@ $("input.button-primary").click(function (event) {
   $("#results").empty();
   const searchLocation = $("#searchBox").val().trim(); // from form
   let modal = $('#myModal');
-  console.log(modal);
   let span = $('.span');
   let cats = ""; // categories
   $.each($("input[type='checkbox']:checked"), function () {
