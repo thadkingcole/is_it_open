@@ -29,9 +29,9 @@
   text-decoration: none;
   cursor: pointer;
 }
-
 .container {
     margin-top: 10px;
+    margin-bottom: 10px;
     padding: 3px;
     color: #ccd5cb;
     background-color: #256090;
@@ -120,7 +120,7 @@ img.bg {
         width: 100%;
     }
     .container {
-        margin-top: ;
+        margin-top: 10px;
     }
     
 }
@@ -129,23 +129,19 @@ img.bg {
     background-color: #256090;
     margin: auto;
     margin-top: 25px;
+    margin-bottom: 25px;
     width: fit-content;
 }
 .main {
     background-color: #256090;
-    
 }
 .row-main {
     display: flex;
-    
 }
 .search {
     display: flex;
     flex-direction: column;
-    
-    padding: 10px;
-    
-    
+    padding: 10px; 
 }
 .checkBox {
     zoom: 0;
