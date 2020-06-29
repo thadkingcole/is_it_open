@@ -236,6 +236,8 @@ function yelpSearch(locationStr, catsStr) {
     method: "GET",
     dataType: "json",
     success: function (data) {
+      console.log(data);
+
       // Grab the results from the API JSON return
       const totalresults = data.total;
       // get lat and long of search area for covidAPI
@@ -263,6 +265,7 @@ function yelpSearch(locationStr, catsStr) {
           const city = item.location.city;
           const state = item.location.state;
           const zipcode = item.location.zip_code;
+          const website = item.url;
           // start other yelp API call to find open status
           yelpOpenStatus(id);
 
@@ -270,9 +273,9 @@ function yelpSearch(locationStr, catsStr) {
           $("#results").append(
             '<div id="' +
             id +
-            '" class="resultsBox"><img src="' +
+            '" class="resultsBox"><a target="_blank" href="' + website + '">' + '<img src="' +
             image +
-            '" style="width:200px;height:150px;"><br><b>' +
+            '" style="width:200px;height:150px;"></a><br><b>' +
             name +
             "</b><br> Located at: " +
             address +
@@ -320,7 +323,5 @@ $("input.button-primary").click(function (event) {
     // Modal to alert please enter one catogory
     $('#myModal').css("display", "block");
     $('.close').on('click', function () { $('#myModal').css("display", "none"); });
-
-
   }
 });
