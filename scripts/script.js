@@ -6,7 +6,6 @@ const yelpHeaders = {
     "Bearer TkYGxqcV6sGmv3RJSbT79S5bzAJdB2CRgJoEWmuGvd-Z9I5FRFzJ8VoQWGIGETFof5BJUGUQsWO6LqgwLscK6sEeLrbWthDRBzdIDuE3RynssWvbTg7szQ6oWvvzXnYx",
 };
 
-
 // Functions
 function yelpOpenStatus(businessID) {
   // construct business details from yelp businesses/{id} API
@@ -26,9 +25,9 @@ function yelpOpenStatus(businessID) {
       const openStatus = $("<p>").attr("id", "#" + businessID + "status");
       // and put the open status in that element
       if (response.hours[0].is_open_now) {
-        openStatus.text("IS OPEN NOW").css("color", "green");
+        openStatus.text("IS OPEN NOW").css("color", "lime");
       } else {
-        openStatus.text("IS CLOSED NOW").css("color", "#cc0000"); // dark red
+        openStatus.text("IS CLOSED NOW").css("color", "#ff4d4d"); // light red
       }
       // append openStatus to the #businessID
       $("#" + businessID).append(openStatus);
@@ -242,7 +241,6 @@ function yelpSearch(locationStr, catsStr) {
     method: "GET",
     dataType: "json",
     success: function (data) {
-
       // Grab the results from the API JSON return
       const totalresults = data.total;
       // get lat and long of search area for covidAPI
@@ -279,26 +277,29 @@ function yelpSearch(locationStr, catsStr) {
           // Append our result into our page
           $("#results").append(
             '<div id="' +
-            id +
-            '" class="resultsBox"><a target="_blank" href="' + website + '">' + '<img src="' +
-            image +
-            '" style="width:200px;height:150px;"></a><br><b>' +
-            name +
-            "</b><br> Located at: " +
-            address +
-            " " +
-            city +
-            ", " +
-            state +
-            " " +
-            zipcode +
-            "<br>The phone number for this business is: " +
-            phone +
-            "<br>This business has a rating of " +
-            rating +
-            " with " +
-            reviewcount +
-            " reviews.<br></div>"
+              id +
+              '" class="resultsBox"><a target="_blank" href="' +
+              website +
+              '">' +
+              '<img src="' +
+              image +
+              '" style="width:200px;height:150px;"></a><br><b>' +
+              name +
+              "</b><br> Located at: " +
+              address +
+              " " +
+              city +
+              ", " +
+              state +
+              " " +
+              zipcode +
+              "<br>The phone number for this business is: " +
+              phone +
+              "<br>This business has a rating of " +
+              rating +
+              " with " +
+              reviewcount +
+              " reviews.<br></div>"
           );
         });
       } else {
@@ -317,9 +318,9 @@ $("input.button-primary").click(function () {
   $.each($("input[type='checkbox']:checked"), function () {
     cats += $(this).val() + ","; // add each checked category
   });
-  $('#covidBanner').fadeIn().css('display', 'flex');
-  $('#resultsBanner').fadeIn().css('display', 'flex');
-  $('.right').fadeIn().css('display', 'block');
+  $("#covidBanner").fadeIn().css("display", "flex");
+  $("#resultsBanner").fadeIn().css("display", "flex");
+  $(".right").fadeIn().css("display", "block");
 
   // remove extra comma at end of category string cats
   if (cats.endsWith(",")) {
@@ -327,11 +328,12 @@ $("input.button-primary").click(function () {
     yelpSearch(searchLocation, categories);
   } else {
     // Modal to alert please enter one catogory
-    $('#myModal').css("display", "block");
-    $('.close').on('click', function () { $('#myModal').css("display", "none"); });
-    $('#covidBanner').css('display', 'none');
-    $('#resultsBanner').css('display', 'none');
-    $('.right').css('display', 'none');
+    $("#myModal").css("display", "block");
+    $(".close").on("click", function () {
+      $("#myModal").css("display", "none");
+    });
+    $("#covidBanner").css("display", "none");
+    $("#resultsBanner").css("display", "none");
+    $(".right").css("display", "none");
   }
-
 });
