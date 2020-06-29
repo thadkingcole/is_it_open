@@ -1,10 +1,12 @@
 // Global Variables
+const clickLimit = 0;
 const yelpLimit = 5; // 5 appears to be the max requests that can be made at a time
 // headers object used in yelp api ajax call
 const yelpHeaders = {
   Authorization:
     "Bearer TkYGxqcV6sGmv3RJSbT79S5bzAJdB2CRgJoEWmuGvd-Z9I5FRFzJ8VoQWGIGETFof5BJUGUQsWO6LqgwLscK6sEeLrbWthDRBzdIDuE3RynssWvbTg7szQ6oWvvzXnYx",
 };
+
 
 // Functions
 function yelpOpenStatus(businessID) {
@@ -267,26 +269,26 @@ function yelpSearch(locationStr, catsStr) {
           // Append our result into our page
           $("#results").append(
             '<div id="' +
-              id +
-              '" class="resultsBox"><img src="' +
-              image +
-              '" style="width:200px;height:150px;"><br><b>' +
-              name +
-              "</b><br> Located at: " +
-              address +
-              " " +
-              city +
-              ", " +
-              state +
-              " " +
-              zipcode +
-              "<br>The phone number for this business is: " +
-              phone +
-              "<br>This business has a rating of " +
-              rating +
-              " with " +
-              reviewcount +
-              " reviews.<br></div>"
+            id +
+            '" class="resultsBox"><img src="' +
+            image +
+            '" style="width:200px;height:150px;"><br><b>' +
+            name +
+            "</b><br> Located at: " +
+            address +
+            " " +
+            city +
+            ", " +
+            state +
+            " " +
+            zipcode +
+            "<br>The phone number for this business is: " +
+            phone +
+            "<br>This business has a rating of " +
+            rating +
+            " with " +
+            reviewcount +
+            " reviews.<br></div>"
           );
         });
       } else {
@@ -303,6 +305,9 @@ $("input.button-primary").click(function (event) {
   // clear div so that duplicates do not appear from multiple searches
   $("#results").empty();
   const searchLocation = $("#searchBox").val().trim(); // from form
+  let modal = $('#myModal');
+  console.log(modal);
+  let span = $('.span');
   let cats = ""; // categories
   $.each($("input[type='checkbox']:checked"), function () {
     cats += $(this).val() + ","; // add each checked category
@@ -312,10 +317,10 @@ $("input.button-primary").click(function (event) {
     const categories = cats.substr(0, cats.length - 1);
     yelpSearch(searchLocation, categories);
   } else {
-    // TODO change the alert to a modal. alerts not allowed
-    alert(
-      "please select at least one category\n\n" +
-        "change this to a modal".toUpperCase()
-    );
+    // Modal to alert please enter one catogory
+    $('#myModal').css("display", "block");
+    $('.close').on('click', function () { $('#myModal').css("display", "none"); });
+
+
   }
 });
