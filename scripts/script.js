@@ -1,5 +1,4 @@
 // Global Variables
-const clickLimit = 0;
 const yelpLimit = 5; // 5 appears to be the max requests that can be made at a time
 // headers object used in yelp api ajax call
 const yelpHeaders = {
@@ -21,11 +20,18 @@ function yelpOpenStatus(businessID) {
     dataType: "json",
     success: function (response) {
       // return string depending on whether business is current open
+      // first, empty the p tag with open status if already created
+      $("#" + businessID + "status").empty();
+      // next, create an element for the business's open status
+      const openStatus = $("<p>").attr("id", "#" + businessID + "status");
+      // and put the open status in that element
       if (response.hours[0].is_open_now) {
-        $("#" + businessID).append($("<p>").text("IS OPEN NOW!"));
+        openStatus.text("IS OPEN NOW").css("color", "green");
       } else {
-        $("#" + businessID).append($("<p>").text("is closed now."));
+        openStatus.text("IS CLOSED NOW").css("color", "#cc0000"); // dark red
       }
+      // append openStatus to the #businessID
+      $("#" + businessID).append(openStatus);
     },
   });
 }
@@ -236,7 +242,6 @@ function yelpSearch(locationStr, catsStr) {
     method: "GET",
     dataType: "json",
     success: function (data) {
-      console.log(data);
 
       // Grab the results from the API JSON return
       const totalresults = data.total;
@@ -247,6 +252,8 @@ function yelpSearch(locationStr, catsStr) {
       const state = data.businesses[0].location.state;
       covidAPI(abbrToState(state), latitude, longitude);
       // If our results are greater than 0, continue
+      // start by remove results that may already be displayed
+      $("#results").empty();
       if (totalresults > 0) {
         // Display a header on the page with the number of results
         $("#results").append(
@@ -305,12 +312,8 @@ function yelpSearch(locationStr, catsStr) {
 // Main
 // search button event listener
 $("input.button-primary").click(function (event) {
-
-  // clear div so that duplicates do not appear from multiple searches
-  $("#results").empty();
   const searchLocation = $("#searchBox").val().trim(); // from form
   let modal = $('#myModal');
-  console.log(modal);
   let span = $('.span');
   let cats = ""; // categories
   $.each($("input[type='checkbox']:checked"), function () {
