@@ -1,5 +1,4 @@
 // Global Variables
-const clickLimit = 0;
 const yelpLimit = 5; // 5 appears to be the max requests that can be made at a time
 // headers object used in yelp api ajax call
 const yelpHeaders = {
@@ -236,7 +235,6 @@ function yelpSearch(locationStr, catsStr) {
     method: "GET",
     dataType: "json",
     success: function (data) {
-      console.log(data);
 
       // Grab the results from the API JSON return
       const totalresults = data.total;
