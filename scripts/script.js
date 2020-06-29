@@ -6,6 +6,7 @@ const yelpHeaders = {
     "Bearer TkYGxqcV6sGmv3RJSbT79S5bzAJdB2CRgJoEWmuGvd-Z9I5FRFzJ8VoQWGIGETFof5BJUGUQsWO6LqgwLscK6sEeLrbWthDRBzdIDuE3RynssWvbTg7szQ6oWvvzXnYx",
 };
 
+
 // Functions
 function yelpOpenStatus(businessID) {
   // construct business details from yelp businesses/{id} API
@@ -241,6 +242,7 @@ function yelpSearch(locationStr, catsStr) {
     method: "GET",
     dataType: "json",
     success: function (data) {
+
       // Grab the results from the API JSON return
       const totalresults = data.total;
       // get lat and long of search area for covidAPI
@@ -270,32 +272,33 @@ function yelpSearch(locationStr, catsStr) {
           const city = item.location.city;
           const state = item.location.state;
           const zipcode = item.location.zip_code;
+          const website = item.url;
           // start other yelp API call to find open status
           yelpOpenStatus(id);
 
           // Append our result into our page
           $("#results").append(
             '<div id="' +
-              id +
-              '" class="resultsBox"><img src="' +
-              image +
-              '" style="width:200px;height:150px;"><br><b>' +
-              name +
-              "</b><br> Located at: " +
-              address +
-              " " +
-              city +
-              ", " +
-              state +
-              " " +
-              zipcode +
-              "<br>The phone number for this business is: " +
-              phone +
-              "<br>This business has a rating of " +
-              rating +
-              " with " +
-              reviewcount +
-              " reviews.<br></div>"
+            id +
+            '" class="resultsBox"><a target="_blank" href="' + website + '">' + '<img src="' +
+            image +
+            '" style="width:200px;height:150px;"></a><br><b>' +
+            name +
+            "</b><br> Located at: " +
+            address +
+            " " +
+            city +
+            ", " +
+            state +
+            " " +
+            zipcode +
+            "<br>The phone number for this business is: " +
+            phone +
+            "<br>This business has a rating of " +
+            rating +
+            " with " +
+            reviewcount +
+            " reviews.<br></div>"
           );
         });
       } else {
@@ -310,6 +313,8 @@ function yelpSearch(locationStr, catsStr) {
 // search button event listener
 $("input.button-primary").click(function (event) {
   const searchLocation = $("#searchBox").val().trim(); // from form
+  let modal = $('#myModal');
+  let span = $('.span');
   let cats = ""; // categories
   $.each($("input[type='checkbox']:checked"), function () {
     cats += $(this).val() + ","; // add each checked category
@@ -319,10 +324,8 @@ $("input.button-primary").click(function (event) {
     const categories = cats.substr(0, cats.length - 1);
     yelpSearch(searchLocation, categories);
   } else {
-    // TODO change the alert to a modal. alerts not allowed
-    alert(
-      "please select at least one category\n\n" +
-        "change this to a modal".toUpperCase()
-    );
+    // Modal to alert please enter one catogory
+    $('#myModal').css("display", "block");
+    $('.close').on('click', function () { $('#myModal').css("display", "none"); });
   }
 });
