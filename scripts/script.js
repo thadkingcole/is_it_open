@@ -21,7 +21,6 @@ function covidInt(country) {
   };
 
   $.ajax(settings).done(function (response) {
-    console.log("covid int", response);
     const data = response[0];
     const countryData = {
       name: data.country, // name of country
@@ -62,7 +61,6 @@ function covidUS(state, latitude, longitude) {
   };
 
   $.ajax(settings).done(function (response) {
-    console.log("covid US", response);
     // get state data
     const stateData = {
       name: response.data[0].region.province,
@@ -255,7 +253,6 @@ function yelpOpenStatus(businessID) {
     method: "GET",
     dataType: "json",
     success: function (response) {
-      console.log("yelp business", response);
       // return string depending on whether business is current open
       // first, empty the p tag with open status if already created
       $("#" + businessID + "status").empty();
@@ -284,7 +281,6 @@ function yelpSearch(locationStr, catsStr) {
     method: "GET",
     dataType: "json",
     success: function (data) {
-      console.log("yelp initial", data);
       // Grab the results from the API JSON return
       const totalresults = data.total;
       // get country of search
