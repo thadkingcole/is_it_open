@@ -59,6 +59,9 @@
     color: white;
     padding: 5px;
 }
+.search {
+    padding: 10px;
+}
 #covidBanner {
     display: none;
     border: 1px #f0efeb groove;

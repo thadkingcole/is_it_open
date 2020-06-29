@@ -319,9 +319,9 @@ $("input.button-primary").click(function (event) {
   $.each($("input[type='checkbox']:checked"), function () {
     cats += $(this).val() + ","; // add each checked category
   });
-  $('#covidBanner').css('display', 'flex');
-  $('#resultsBanner').css('display', 'flex');
-  $('.right').css('display', 'block');
+  $('#covidBanner').fadeIn().css('display', 'flex');
+  $('#resultsBanner').fadeIn().css('display', 'flex');
+  $('.right').fadeIn().css('display', 'block');
 
   // remove extra comma at end of category string cats
   if (cats.endsWith(",")) {
