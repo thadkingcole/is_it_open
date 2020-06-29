@@ -305,6 +305,7 @@ function yelpSearch(locationStr, catsStr) {
 // Main
 // search button event listener
 $("input.button-primary").click(function (event) {
+
   // clear div so that duplicates do not appear from multiple searches
   $("#results").empty();
   const searchLocation = $("#searchBox").val().trim(); // from form
@@ -323,5 +324,11 @@ $("input.button-primary").click(function (event) {
     // Modal to alert please enter one catogory
     $('#myModal').css("display", "block");
     $('.close').on('click', function () { $('#myModal').css("display", "none"); });
+    $('#covidBanner').css('display', 'none');
+    $('#resultsBanner').css('display', 'none');
+    $('.right').css('display', 'none');
   }
+  $('#covidBanner').css('display', 'flex');
+  $('#resultsBanner').css('display', 'flex');
+  $('.right').css('display', 'block');
 });
