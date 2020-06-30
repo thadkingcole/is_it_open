@@ -39,7 +39,9 @@ function covidInt(country) {
     countryList.append(
       $("<li>").text(`Total Confirmed Cases: ${data.confirmed}`)
     );
-    countryList.append($("<li>").text(`Total Critical Cases: ${data.critical}`));
+    countryList.append(
+      $("<li>").text(`Total Critical Cases: ${data.critical}`)
+    );
     countryList.append($("<li>").text(`Total Deaths: ${data.deaths}`));
     countryList.append($("<li>").text(`Total Recovered: ${data.recovered}`));
     // append list to page
@@ -262,7 +264,7 @@ function yelpOpenStatus(businessID) {
       if (response.hours[0].is_open_now) {
         openStatus.text("IS OPEN NOW").css("color", "lime");
       } else {
-        openStatus.text("IS CLOSED NOW").css("color", "#ff4d4d"); // light red
+        openStatus.text("IS CLOSED NOW").css("color", "coral"); // light red
       }
       // append openStatus to the #businessID
       $("#" + businessID).append(openStatus);
@@ -322,32 +324,34 @@ function yelpSearch(locationStr, catsStr) {
           yelpOpenStatus(id);
 
           // Append our result into our page
-          $("#results").append(
-            '<div id="' +
-              id +
-              '" class="resultsBox"><a target="_blank" href="' +
-              website +
-              '">' +
-              '<img src="' +
-              image +
-              '" style="width:200px;height:150px;"></a><br><b>' +
-              name +
-              "</b><br> Located at: " +
-              address +
-              " " +
-              city +
-              ", " +
-              state +
-              " " +
-              zipcode +
-              "<br>The phone number for this business is: " +
-              phone +
-              "<br>This business has a rating of " +
-              rating +
-              " with " +
-              reviewcount +
-              " reviews.<br></div>"
+          // create a div to hold the business information
+          const businessEl = $("<div>").attr("id", id).addClass("resultsBox");
+          // create img to hold business picture
+          const businessPic = $("<img>")
+            .attr("src", image)
+            .attr("alt", "name")
+            .css("width", "200px", "height", "150px");
+          // add our picture with a link to the yelp page
+          businessEl.append(
+            $("<a>")
+              .attr("href", website)
+              .attr("target", "_blank")
+              .append(businessPic)
           );
+          // display business name (bolded)
+          businessEl.append($("<div>").append($("<strong>").text(name)));
+          // display business address
+          businessEl.append(
+            $("<address>").html(`${address}<br>${city}, ${state}, ${zipcode}`)
+          );
+          // display business phone number
+          businessEl.append($("<div>").text(`Phone: ${phone}`));
+          // display rating image & number of reviews
+          businessEl.append(
+            $("<div>").text(`Rating: ${rating} with ${reviewcount} reviews`)
+          );
+          // add business El to #results ID
+          $("#results").append(businessEl);
         });
       } else {
         // If our results are 0; no businesses were returned by the JSON therefor we display on the page no results were found
