@@ -277,6 +277,7 @@ function yelpSearch(locationStr, catsStr) {
   // https://www.yelp.com/developers/documentation/v3/business_search
   const businessSearchURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=${locationStr}&categories=${catsStr}&limit=${yelpLimit}`;
 
+
   $.ajax({
     url: businessSearchURL,
     headers: yelpHeaders,
@@ -346,13 +347,45 @@ function yelpSearch(locationStr, catsStr) {
           );
           // display business phone number
           businessEl.append($("<div>").text(`Phone: ${phone}`));
-          // display rating image & number of reviews
-          businessEl.append(
-            $("<div>").text(`Rating: ${rating} with ${reviewcount} reviews`)
-          );
+         
+
+          //Yelp Pictures append
+          if (rating === 0) {
+            businessEl.append($('<img>').attr('src', './assets/regular/regular_0.png'))
+          }
+          else if (rating === 1) {
+            businessEl.append($('<img>').attr('src', './assets/regular/regular_1.png'))
+          }
+          else if (rating === 1.5) {
+            businessEl.append($('<img>').attr('src', './assets/regular/regular_1_half.png'))
+          }
+          else if (rating === 2) {
+            businessEl.append($('<img>').attr('src', './assets/regular/regular_2.png'))
+          }
+          else if (rating === 2.5) {
+            businessEl.append($('<img>').attr('src', './assets/regular/regular_2_half.png'))
+          }
+          else if (rating === 3) {
+            businessEl.append($('<img>').attr('src', './assets/regular/regular_3.png'))
+          }
+          else if (rating === 3.5) {
+            businessEl.append($('<img>').attr('src', './assets/regular/regular_3_half.png'))
+          }
+          else if (rating === 4) {
+            businessEl.append($('<img>').attr('src', './assets/regular/regular_4.png'))
+          }
+          else if (rating === 4.5) {
+            businessEl.append($('<img>').attr('src', './assets/regular/regular_4_half.png'))
+          }
+          else if (rating === 5) {
+            businessEl.append($('<img>').attr('src', './assets/regular/regular_5.png'))
+          } 
+          businessEl.append($('<strong>').text(`  ${reviewcount} reviews`))
+
           // add business El to #results ID
           $("#results").append(businessEl);
         });
+
       } else {
         // If our results are 0; no businesses were returned by the JSON therefor we display on the page no results were found
         $("#results").append("<h5>We discovered no results!</h5>");

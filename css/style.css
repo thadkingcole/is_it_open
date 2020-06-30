@@ -160,3 +160,11 @@ img.bg {
     width: 367px;
 }
 }
+
+.resultsBox {
+    background-color: black;
+  padding: 10px;
+border-radius: 25px;
+margin-bottom: 25px;
+
+}
