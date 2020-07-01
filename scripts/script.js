@@ -6,6 +6,9 @@ const yelpHeaders = {
     "Bearer TkYGxqcV6sGmv3RJSbT79S5bzAJdB2CRgJoEWmuGvd-Z9I5FRFzJ8VoQWGIGETFof5BJUGUQsWO6LqgwLscK6sEeLrbWthDRBzdIDuE3RynssWvbTg7szQ6oWvvzXnYx",
 };
 const rapidAPIKey = "0f227271cfmsh1a5be0f784ee16ap17ae07jsndfa955b03b56";
+const imageIndex = Math.floor(Math.random() * 7);
+let imageTag = $('.bg');
+imageTag.attr('src', './assets/images/bg' + imageIndex + '.jpg');
 
 // Functions
 function covidInt(country) {
@@ -347,6 +350,12 @@ function yelpSearch(locationStr, catsStr, radius) {
           // display business phone number
           businessEl.append($("<div>").text(`Phone: ${phone}`));
 
+          
+          const yelplogo = $('<img>').attr('src', './assets/images/yelplogo.png').attr('width', '70px')
+          
+          businessEl.append($('<a>').attr('href', 'https://www.yelp.com').attr('target','_blank').append(yelplogo))
+
+
           //Yelp Pictures append
           if (rating === 0) {
             businessEl.append(
@@ -429,4 +438,5 @@ $("input.button-primary").click(function () {
     $("#resultsBanner").css("display", "none");
     $(".right").css("display", "none");
   }
+
 });
