@@ -348,6 +348,11 @@ function yelpSearch(locationStr, catsStr) {
           // display business phone number
           businessEl.append($("<div>").text(`Phone: ${phone}`));
          
+          const yelplogo = $('<img>').attr('src', './assets/images/yelplogo.png').attr('width', '70px')
+          
+          businessEl.append($('<a>').attr('href', 'https://www.yelp.com').attr('target','_blank').append(yelplogo))
+          
+          
 
           //Yelp Pictures append
           if (rating === 0) {
@@ -381,6 +386,12 @@ function yelpSearch(locationStr, catsStr) {
             businessEl.append($('<img>').attr('src', './assets/regular/regular_5.png'))
           } 
           businessEl.append($('<strong>').text(`  ${reviewcount} reviews`))
+
+         
+
+          
+
+
 
           // add business El to #results ID
           $("#results").append(businessEl);
