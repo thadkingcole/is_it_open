@@ -272,11 +272,10 @@ function yelpOpenStatus(businessID) {
   });
 }
 
-function yelpSearch(locationStr, catsStr) {
+function yelpSearch(locationStr, catsStr, radius) {
   // construct the initial search term using yelp businesses/search API
   // https://www.yelp.com/developers/documentation/v3/business_search
-  const businessSearchURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=${locationStr}&categories=${catsStr}&limit=${yelpLimit}`;
-
+  const businessSearchURL = `https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search?location=${locationStr}&categories=${catsStr}&limit=${yelpLimit}&radius=${radius}`;
 
   $.ajax({
     url: businessSearchURL,
@@ -347,45 +346,54 @@ function yelpSearch(locationStr, catsStr) {
           );
           // display business phone number
           businessEl.append($("<div>").text(`Phone: ${phone}`));
-         
 
           //Yelp Pictures append
           if (rating === 0) {
-            businessEl.append($('<img>').attr('src', './assets/regular/regular_0.png'))
+            businessEl.append(
+              $("<img>").attr("src", "./assets/regular/regular_0.png")
+            );
+          } else if (rating === 1) {
+            businessEl.append(
+              $("<img>").attr("src", "./assets/regular/regular_1.png")
+            );
+          } else if (rating === 1.5) {
+            businessEl.append(
+              $("<img>").attr("src", "./assets/regular/regular_1_half.png")
+            );
+          } else if (rating === 2) {
+            businessEl.append(
+              $("<img>").attr("src", "./assets/regular/regular_2.png")
+            );
+          } else if (rating === 2.5) {
+            businessEl.append(
+              $("<img>").attr("src", "./assets/regular/regular_2_half.png")
+            );
+          } else if (rating === 3) {
+            businessEl.append(
+              $("<img>").attr("src", "./assets/regular/regular_3.png")
+            );
+          } else if (rating === 3.5) {
+            businessEl.append(
+              $("<img>").attr("src", "./assets/regular/regular_3_half.png")
+            );
+          } else if (rating === 4) {
+            businessEl.append(
+              $("<img>").attr("src", "./assets/regular/regular_4.png")
+            );
+          } else if (rating === 4.5) {
+            businessEl.append(
+              $("<img>").attr("src", "./assets/regular/regular_4_half.png")
+            );
+          } else if (rating === 5) {
+            businessEl.append(
+              $("<img>").attr("src", "./assets/regular/regular_5.png")
+            );
           }
-          else if (rating === 1) {
-            businessEl.append($('<img>').attr('src', './assets/regular/regular_1.png'))
-          }
-          else if (rating === 1.5) {
-            businessEl.append($('<img>').attr('src', './assets/regular/regular_1_half.png'))
-          }
-          else if (rating === 2) {
-            businessEl.append($('<img>').attr('src', './assets/regular/regular_2.png'))
-          }
-          else if (rating === 2.5) {
-            businessEl.append($('<img>').attr('src', './assets/regular/regular_2_half.png'))
-          }
-          else if (rating === 3) {
-            businessEl.append($('<img>').attr('src', './assets/regular/regular_3.png'))
-          }
-          else if (rating === 3.5) {
-            businessEl.append($('<img>').attr('src', './assets/regular/regular_3_half.png'))
-          }
-          else if (rating === 4) {
-            businessEl.append($('<img>').attr('src', './assets/regular/regular_4.png'))
-          }
-          else if (rating === 4.5) {
-            businessEl.append($('<img>').attr('src', './assets/regular/regular_4_half.png'))
-          }
-          else if (rating === 5) {
-            businessEl.append($('<img>').attr('src', './assets/regular/regular_5.png'))
-          } 
-          businessEl.append($('<strong>').text(`  ${reviewcount} reviews`))
+          businessEl.append($("<strong>").text(`  ${reviewcount} reviews`));
 
           // add business El to #results ID
           $("#results").append(businessEl);
         });
-
       } else {
         // If our results are 0; no businesses were returned by the JSON therefor we display on the page no results were found
         $("#results").append("<h5>We discovered no results!</h5>");
@@ -397,7 +405,8 @@ function yelpSearch(locationStr, catsStr) {
 // Main
 // search button event listener
 $("input.button-primary").click(function () {
-  const searchLocation = $("#searchBox").val().trim(); // from form
+  const searchLocation = $("#searchBox").val().trim(); // from input form
+  let searchRadius = $("#search-radius").val(); // from dropdown
   let cats = ""; // categories
   $.each($("input[type='checkbox']:checked"), function () {
     cats += $(this).val() + ","; // add each checked category
@@ -405,11 +414,11 @@ $("input.button-primary").click(function () {
   $("#covidBanner").fadeIn().css("display", "flex");
   $("#resultsBanner").fadeIn().css("display", "flex");
   $(".right").fadeIn().css("display", "block");
-
   // remove extra comma at end of category string cats
   if (cats.endsWith(",")) {
     const categories = cats.substr(0, cats.length - 1);
-    yelpSearch(searchLocation, categories);
+    // perform yelp api search for businesses meeting requested paramters
+    yelpSearch(searchLocation, categories, searchRadius);
   } else {
     // Modal to alert please enter one catogory
     $("#myModal").css("display", "block");
