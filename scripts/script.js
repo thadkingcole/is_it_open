@@ -346,6 +346,10 @@ function yelpSearch(locationStr, catsStr, radius) {
           );
           // display business phone number
           businessEl.append($("<div>").text(`Phone: ${phone}`));
+          
+          const yelplogo = $('<img>').attr('src', './assets/images/yelplogo.png').attr('width', '70px')
+          
+          businessEl.append($('<a>').attr('href', 'https://www.yelp.com').attr('target','_blank').append(yelplogo))
 
           //Yelp Pictures append
           if (rating === 0) {
