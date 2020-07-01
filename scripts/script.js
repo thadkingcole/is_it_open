@@ -1,5 +1,5 @@
 // Global Variables
-const yelpLimit = 50; // 5 appears to be the max requests that can be made at a time
+const yelpLimit = 50; // only 5 will be displayed at a time
 // headers object used in yelp api ajax call
 const yelpHeaders = {
   Authorization:
