@@ -9,6 +9,8 @@ const rapidAPIKey = "0f227271cfmsh1a5be0f784ee16ap17ae07jsndfa955b03b56";
 const imageIndex = Math.floor(Math.random() * 7);
 let imageTag = $(".bg");
 imageTag.attr("src", "./assets/images/bg" + imageIndex + ".jpg");
+// format for displaying dates/times
+const momentFormat = "MMMM Do, YYYY, h:mm:ss a";
 
 // Functions
 function covidInt(country) {
@@ -27,8 +29,8 @@ function covidInt(country) {
     const data = response[0];
     const countryData = {
       name: data.country, // name of country
-      lastChange: data.lastChange, // date & time data last changed
-      lastUpdate: data.lastUpdate, // data & time data was updated
+      lastChange: moment(data.lastChange).format(momentFormat), // date & time data last changed
+      lastUpdate: moment(data.lastUpdate).format(momentFormat), // data & time data was updated
       confirmed: data.confirmed, // total confirmed cases
       critical: data.critical, // total critical cases
       deaths: data.deaths, // total deaths
@@ -75,8 +77,8 @@ function covidUS(state, latitude, longitude) {
       confirmedDiff: response.data[0].confirmed_diff,
       totalDeaths: response.data[0].deaths,
       deathDiff: response.data[0].deaths_diff,
-      date: response.data[0].last_update,
-      since: response.data[0].date,
+      date: moment(response.data[0].last_update).format(momentFormat),
+      since: moment(response.data[0].date).format("MM/DD/YYYY"),
       fatalityRate: response.data[0].fatality_rate,
     };
     // array of county data
@@ -110,8 +112,8 @@ function covidUS(state, latitude, longitude) {
         countyData.casesDiff = county.confirmed_diff;
         countyData.totalDeaths = county.deaths;
         countyData.deathDiff = county.deaths_diff;
-        countyData.date = county.last_update;
-        countyData.since = county.date;
+        countyData.date = moment(county.last_update).format(momentFormat);
+        countyData.since = moment(county.date).format("MM/DD/YYYY");
       }
     });
     // post covid data on page
