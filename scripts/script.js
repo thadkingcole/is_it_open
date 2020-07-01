@@ -1,5 +1,5 @@
 // Global Variables
-const yelpLimit = 5; // 5 appears to be the max requests that can be made at a time
+const yelpLimit = 50; // only 5 will be displayed at a time
 // headers object used in yelp api ajax call
 const yelpHeaders = {
   Authorization:
@@ -7,8 +7,8 @@ const yelpHeaders = {
 };
 const rapidAPIKey = "0f227271cfmsh1a5be0f784ee16ap17ae07jsndfa955b03b56";
 const imageIndex = Math.floor(Math.random() * 7);
-let imageTag = $('.bg');
-imageTag.attr('src', './assets/images/bg' + imageIndex + '.jpg');
+let imageTag = $(".bg");
+imageTag.attr("src", "./assets/images/bg" + imageIndex + ".jpg");
 
 // Functions
 function covidInt(country) {
@@ -262,17 +262,108 @@ function yelpOpenStatus(businessID) {
       // first, empty the p tag with open status if already created
       $("#" + businessID + "status").empty();
       // next, create an element for the business's open status
-      const openStatus = $("<p>").attr("id", "#" + businessID + "status");
+      const openStatusEl = $("<p>").attr("id", "#" + businessID + "status");
       // and put the open status in that element
-      if (response.hours[0].is_open_now) {
-        openStatus.text("IS OPEN NOW").css("color", "lime");
-      } else {
-        openStatus.text("IS CLOSED NOW").css("color", "coral"); // light red
+      try {
+        response.hours[0];
+      } catch {
+        openStatusEl.text("Open status: Unknown").css("color", "yellow");
+        $("#" + businessID).append(openStatusEl);
+        return -1;
       }
-      // append openStatus to the #businessID
-      $("#" + businessID).append(openStatus);
+      if (response.hours[0].is_open_now) {
+        openStatusEl.text("IS OPEN NOW").css("color", "lime");
+      } else {
+        openStatusEl.text("IS CLOSED NOW").css("color", "coral"); // light red
+      }
+      // append openStatusEl to the #businessID
+      $("#" + businessID).append(openStatusEl);
     },
   });
+}
+
+function showBusiness(business) {
+  // Store each business's object in a variable
+  const id = business.id;
+  const phone = business.display_phone;
+  const image = business.image_url;
+  const name = business.name;
+  const rating = business.rating;
+  const reviewcount = business.review_count;
+  const address = business.location.address1;
+  const city = business.location.city;
+  const state = business.location.state;
+  const zipcode = business.location.zip_code;
+  const website = business.url;
+  // start other yelp API call to find open status
+  yelpOpenStatus(id);
+
+  // Append our result into our page
+  // create a div to hold the business information
+  const businessEl = $("<div>").attr("id", id).addClass("resultsBox");
+  // create img to hold business picture
+  const businessPic = $("<img>")
+    .attr("src", image)
+    .attr("alt", "name")
+    .css("width", "200px", "height", "150px");
+  // add our picture with a link to the yelp page
+  businessEl.append(
+    $("<a>").attr("href", website).attr("target", "_blank").append(businessPic)
+  );
+  // display business name (bolded)
+  businessEl.append($("<div>").append($("<strong>").text(name)));
+  // display business address
+  businessEl.append(
+    $("<address>").html(`${address}<br>${city}, ${state}, ${zipcode}`)
+  );
+  // display business phone number
+  businessEl.append($("<div>").text(`Phone: ${phone}`));
+
+  const yelplogo = $("<img>")
+    .attr("src", "./assets/images/yelplogo.png")
+    .attr("width", "70px");
+
+  businessEl.append(
+    $("<a>")
+      .attr("href", "https://www.yelp.com")
+      .attr("target", "_blank")
+      .append(yelplogo)
+  );
+
+  //Yelp Pictures append
+  if (rating === 0) {
+    businessEl.append($("<img>").attr("src", "./assets/regular/regular_0.png"));
+  } else if (rating === 1) {
+    businessEl.append($("<img>").attr("src", "./assets/regular/regular_1.png"));
+  } else if (rating === 1.5) {
+    businessEl.append(
+      $("<img>").attr("src", "./assets/regular/regular_1_half.png")
+    );
+  } else if (rating === 2) {
+    businessEl.append($("<img>").attr("src", "./assets/regular/regular_2.png"));
+  } else if (rating === 2.5) {
+    businessEl.append(
+      $("<img>").attr("src", "./assets/regular/regular_2_half.png")
+    );
+  } else if (rating === 3) {
+    businessEl.append($("<img>").attr("src", "./assets/regular/regular_3.png"));
+  } else if (rating === 3.5) {
+    businessEl.append(
+      $("<img>").attr("src", "./assets/regular/regular_3_half.png")
+    );
+  } else if (rating === 4) {
+    businessEl.append($("<img>").attr("src", "./assets/regular/regular_4.png"));
+  } else if (rating === 4.5) {
+    businessEl.append(
+      $("<img>").attr("src", "./assets/regular/regular_4_half.png")
+    );
+  } else if (rating === 5) {
+    businessEl.append($("<img>").attr("src", "./assets/regular/regular_5.png"));
+  }
+  businessEl.append($("<strong>").text(`  ${reviewcount} reviews`));
+
+  // add business El to #results ID
+  $("#results").append(businessEl);
 }
 
 function yelpSearch(locationStr, catsStr, radius) {
@@ -309,99 +400,33 @@ function yelpSearch(locationStr, catsStr, radius) {
         $("#results").append(
           "<h5>We discovered " + totalresults + " results!</h5>"
         );
-        // Itirate through the JSON array of 'businesses' which was returned by the API
-        $.each(data.businesses, function (i, item) {
-          // Store each business's object in a variable
-          const id = item.id;
-          const phone = item.display_phone;
-          const image = item.image_url;
-          const name = item.name;
-          const rating = item.rating;
-          const reviewcount = item.review_count;
-          const address = item.location.address1;
-          const city = item.location.city;
-          const state = item.location.state;
-          const zipcode = item.location.zip_code;
-          const website = item.url;
-          // start other yelp API call to find open status
-          yelpOpenStatus(id);
-
-          // Append our result into our page
-          // create a div to hold the business information
-          const businessEl = $("<div>").attr("id", id).addClass("resultsBox");
-          // create img to hold business picture
-          const businessPic = $("<img>")
-            .attr("src", image)
-            .attr("alt", "name")
-            .css("width", "200px", "height", "150px");
-          // add our picture with a link to the yelp page
-          businessEl.append(
-            $("<a>")
-              .attr("href", website)
-              .attr("target", "_blank")
-              .append(businessPic)
-          );
-          // display business name (bolded)
-          businessEl.append($("<div>").append($("<strong>").text(name)));
-          // display business address
-          businessEl.append(
-            $("<address>").html(`${address}<br>${city}, ${state}, ${zipcode}`)
-          );
-          // display business phone number
-          businessEl.append($("<div>").text(`Phone: ${phone}`));
-
-          
-          const yelplogo = $('<img>').attr('src', './assets/images/yelplogo.png').attr('width', '70px')
-          
-          businessEl.append($('<a>').attr('href', 'https://www.yelp.com').attr('target','_blank').append(yelplogo))
-
-
-          //Yelp Pictures append
-          if (rating === 0) {
-            businessEl.append(
-              $("<img>").attr("src", "./assets/regular/regular_0.png")
-            );
-          } else if (rating === 1) {
-            businessEl.append(
-              $("<img>").attr("src", "./assets/regular/regular_1.png")
-            );
-          } else if (rating === 1.5) {
-            businessEl.append(
-              $("<img>").attr("src", "./assets/regular/regular_1_half.png")
-            );
-          } else if (rating === 2) {
-            businessEl.append(
-              $("<img>").attr("src", "./assets/regular/regular_2.png")
-            );
-          } else if (rating === 2.5) {
-            businessEl.append(
-              $("<img>").attr("src", "./assets/regular/regular_2_half.png")
-            );
-          } else if (rating === 3) {
-            businessEl.append(
-              $("<img>").attr("src", "./assets/regular/regular_3.png")
-            );
-          } else if (rating === 3.5) {
-            businessEl.append(
-              $("<img>").attr("src", "./assets/regular/regular_3_half.png")
-            );
-          } else if (rating === 4) {
-            businessEl.append(
-              $("<img>").attr("src", "./assets/regular/regular_4.png")
-            );
-          } else if (rating === 4.5) {
-            businessEl.append(
-              $("<img>").attr("src", "./assets/regular/regular_4_half.png")
-            );
-          } else if (rating === 5) {
-            businessEl.append(
-              $("<img>").attr("src", "./assets/regular/regular_5.png")
-            );
+        // Itirate through the JSON array of 'businesses' which was returned by the API.
+        // start with displaying the first 5 businesses
+        let businessCtr = 0;
+        for (businessCtr = 0; businessCtr < 5; businessCtr++) {
+          showBusiness(data.businesses[businessCtr]);
+        }
+        // create button for displaying more results
+        const moreButton = $("<button>")
+          .text("Show 5 More")
+          .addClass("showMore button-primary");
+        $("#results").append(moreButton);
+        // add event listener to button just created
+        $(".showMore").click(function () {
+          // display the next 5 busniesses
+          const stopValue = Math.min(businessCtr + 5, totalresults);
+          for (businessCtr; businessCtr < stopValue; businessCtr++) {
+            showBusiness(data.businesses[businessCtr]);
           }
-          businessEl.append($("<strong>").text(`  ${reviewcount} reviews`));
-
-          // add business El to #results ID
-          $("#results").append(businessEl);
+          if (businessCtr < Math.min(yelpLimit, totalresults)) {
+            // move button to bottom of results
+            $(".results").append(moreButton);
+            // clicking button will run this function again and show more results
+          } else {
+            // we reached the number of results returned by the API (max 50)
+            // remove button
+            $(".showMore").remove();
+          }
         });
       } else {
         // If our results are 0; no businesses were returned by the JSON therefor we display on the page no results were found
@@ -438,5 +463,4 @@ $("input.button-primary").click(function () {
     $("#resultsBanner").css("display", "none");
     $(".right").css("display", "none");
   }
-
 });
