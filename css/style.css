@@ -169,4 +169,7 @@ margin-bottom: 25px;
 
 }
 
-.container#container
+.search-radius {
+    display: inline;
+    padding-right: 1rem;
+}
