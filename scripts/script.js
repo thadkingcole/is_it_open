@@ -6,7 +6,7 @@ const yelpHeaders = {
     "Bearer TkYGxqcV6sGmv3RJSbT79S5bzAJdB2CRgJoEWmuGvd-Z9I5FRFzJ8VoQWGIGETFof5BJUGUQsWO6LqgwLscK6sEeLrbWthDRBzdIDuE3RynssWvbTg7szQ6oWvvzXnYx",
 };
 const rapidAPIKey = "0f227271cfmsh1a5be0f784ee16ap17ae07jsndfa955b03b56";
-const imageIndex = Math.floor(Math.random() * 6);
+const imageIndex = Math.floor(Math.random() * 7);
 let imageTag = $('.bg');
 imageTag.attr('src', './assets/images/bg' + imageIndex + '.jpg');
 
