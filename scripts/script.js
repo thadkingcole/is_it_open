@@ -333,7 +333,8 @@ function yelpSearch(locationStr, catsStr, radius) {
           const businessPic = $("<img>")
             .attr("src", image)
             .attr("alt", "name")
-            .css("width", "200px", "height", "150px");
+            .css("width", "200px")
+            .css("border-radius", "20px")
           // add our picture with a link to the yelp page
           businessEl.append(
             $("<a>")
@@ -350,10 +351,10 @@ function yelpSearch(locationStr, catsStr, radius) {
           // display business phone number
           businessEl.append($("<div>").text(`Phone: ${phone}`));
 
-          
+
           const yelplogo = $('<img>').attr('src', './assets/images/yelplogo.png').attr('width', '70px')
-          
-          businessEl.append($('<a>').attr('href', 'https://www.yelp.com').attr('target','_blank').append(yelplogo))
+
+          businessEl.append($('<a>').attr('href', 'https://www.yelp.com').attr('target', '_blank').append(yelplogo))
 
 
           //Yelp Pictures append
