@@ -168,3 +168,8 @@ border-radius: 25px;
 margin-bottom: 25px;
 
 }
+
+.search-radius {
+    display: inline;
+    padding-right: 1rem;
+}
