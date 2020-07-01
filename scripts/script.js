@@ -409,7 +409,7 @@ function yelpSearch(locationStr, catsStr, radius) {
         // create button for displaying more results
         const moreButton = $("<button>")
           .text("Show 5 More")
-          .addClass("showMore");
+          .addClass("showMore button-primary");
         $("#results").append(moreButton);
         // add event listener to button just created
         $(".showMore").click(function () {
