@@ -32,67 +32,75 @@
 
 
 <body>
-    <div id="bg">
-        <img class="bg" img src="./assets/images/bg.jpg" alt="">
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                <p>Please select at least one: restaurants, bars, or parks</p>
-            </div>
-
-        </div>
-        <div class="container" id="container">
-            <div class="row-main">
-
-                <div class="row search">
-                    <div class="four column">
-                        <h1 class="title">Is it Open?</h1>
-                        <input class="u-full-width searchText" type="text" id="searchBox"
-                            placeholder="Enter a City, State, place, zipcode, or address">
-                    </div>
-
-                    <div class="four column checkBox">
-                        <label class="checkboxes">Restaurants
-                            <input type="checkbox" value="restaurants">
-                            <span class="label-body"></span>
-                        </label>
-                        <label class="checkboxes">Bars
-                            <input type="checkbox" value="bars">
-                            <span class="label-body"></span>
-                        </label>
-                        <label class="checkboxes">Parks
-                            <input type="checkbox" value="parks">
-                            <span class="label-body"></span>
-                        </label>
-                        <input class="button-primary" type="submit" value="Search">
-                    </div>
-
-                    <div class="four column covid">
-                        <h3 id="covidBanner">COVID19 Data:</h3>
-                        <div id="covidResults">
-                            <!-- covid data goes here -->
-                        </div>
-                    </div>
-
-                </div>
-
-
-
-                <div class="row right">
-                    <div class="four column results" id="resultArea">
-                        <h3 id="resultsBanner">Results:</h3>
-                        <div id="results">
-                            <!-- yelp data goes here -->
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <img class="bg" src="">
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Please select at least one: restaurants, bars, or parks</p>
         </div>
 
+    </div>
+    <div class="container" id="container">
+
+        <div class="row-main">
+
+            <div class="row search">
+                <div class="four column">
+                    <h1 class="title">Is it Open?</h1>
+                    <input class="u-full-width searchText" type="text" id="searchBox"
+                        placeholder="Enter a City, State, place, zipcode, or address">
+                    <label class="search-radius" for="search-radius">Search Radius:</label>
+                    <select id="search-radius">
+                        <option value="1609">&lt;1 mile</option>
+                        <option value="8045">&lt;5 miles</option>
+                        <option value="16090" selected>&lt;10 miles</option>
+                        <option value="24135">&lt;15 miles</option>
+                        <option value="40000">&lt;25 miles</option>
+                    </select>
+                </div>
+
+                <div class="four column checkBox">
+                    <label class="checkboxes">Restaurants
+                        <input type="checkbox" value="restaurants">
+                        <span class="label-body"></span>
+                    </label>
+                    <label class="checkboxes">Bars
+                        <input type="checkbox" value="bars">
+                        <span class="label-body"></span>
+                    </label>
+                    <label class="checkboxes">Parks
+                        <input type="checkbox" value="parks">
+                        <span class="label-body"></span>
+                    </label>
+                    <input class="button-primary" type="submit" value="Search">
+                </div>
+
+                <div class="four column covid">
+                    <h3 id="covidBanner">COVID19 Data:</h3>
+                    <div id="covidResults">
+                        <!-- covid data goes here -->
+                    </div>
+                </div>
+
+            </div>
 
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="scripts/script.js"></script>
+
+            <div class="row right">
+                <div class="four column results" id="resultArea">
+                    <h3 id="resultsBanner">Results:</h3>
+                    <div id="results">
+                        <!-- yelp data goes here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="scripts/script.js"></script>
 </body>
 
 </html>
