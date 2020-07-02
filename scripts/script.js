@@ -307,7 +307,7 @@ function showBusiness(business) {
   const businessPic = $("<img>")
     .attr("src", image)
     .attr("alt", "name")
-    .css("width", "200px", "height", "150px");
+    .css({"width": "200px", "border-radius": "20px"});
   // add our picture with a link to the yelp page
   businessEl.append(
     $("<a>").attr("href", website).attr("target", "_blank").append(businessPic)

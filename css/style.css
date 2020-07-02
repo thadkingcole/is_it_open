@@ -65,18 +65,18 @@
 #covidBanner {
     display: none;
     border: 1px #f0efeb groove;
-    padding: 5px 0px 5px 0px;
+    padding: 5px;
     background-color: #f0efeb;
-    border-radius: 5px;
+    border-radius: 10px;
     color: #101102;
 }
 #resultsBanner {
     color: #101102;
     display: none;
     border: 1px #f0efeb groove;
-    padding: 5px 0px 5px 0px;
+    padding: 5px;
     background-color: #f0efeb;
-    border-radius: 5px;
+    border-radius: 10px;
 }
 
 img.bg {
@@ -151,6 +151,7 @@ img.bg {
 }
 #covidBanner {
     margin: 0px;
+    
 }
 .covid {
     margin: 0px;
