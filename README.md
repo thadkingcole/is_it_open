@@ -75,7 +75,6 @@ Nu HTML Checker: https://validator.w3.org/nu/?doc=https%3A%2F%2Fthadkingcole.git
 
 
 
-## Reference's
+## References
 
 https://www.flaticon.com/authors/vitaly-gorbachev = FAVICON
-
