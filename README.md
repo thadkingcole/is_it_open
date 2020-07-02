@@ -63,23 +63,31 @@ The yelp API will pull data under the selected checkbox, as well as the mile rad
 
 For both the yelp API as well as the corresponding COVID data the user can enter a City, state, address, zipcode to display relevant information. If the user does not choose one of the following (restaurant, bar, or park) it will tell the user to select at least one by the use of a modal.
 
+[back to top](#is-it-open)
+
 ## User Story
 
 As a person suffering from cabin-fever, I want a list of open restaurants/locations and current covid19 stats to decide where I should go outside.  I can then evaluate the amount of cases in my current county and state and make an informed decision if it is safe to venture out to the local restaurants or bars. If I am interested in seeing data about other places around the world, I will be able to enter a country name, state, address, or zipcode to display information about said places.
 
+[back to top](#is-it-open)
+
 ## Deployed application
 
-Deployed Website: <https://thadkingcole.github.io/is_it_open/>
+- Deployed Website: <https://thadkingcole.github.io/is_it_open/>
 
-Github Repo: <https://github.com/thadkingcole/is_it_open>
+- Github Repo: <https://github.com/thadkingcole/is_it_open>
 
 [![Deployed Application Screenshot](./assets/images/DeployedApp.gif)](https://thadkingcole.github.io/is_it_open)
 
+[back to top](#is-it-open)
+
 ## Validation Link
 
-[CSS Validator](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fthadkingcole.github.io%2Fis_it_open%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
+- [CSS Validator](https://jigsaw.w3.org/css-validator/validator?uri=https%3A%2F%2Fthadkingcole.github.io%2Fis_it_open%2F&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en)
 
-[Nu HTML Checker](https://validator.w3.org/nu/?doc=https%3A%2F%2Fthadkingcole.github.io%2Fis_it_open%2F)
+- [Nu HTML Checker](https://validator.w3.org/nu/?doc=https%3A%2F%2Fthadkingcole.github.io%2Fis_it_open%2F)
+
+[back to top](#is-it-open)
 
 ## References
 
@@ -88,8 +96,12 @@ Github Repo: <https://github.com/thadkingcole/is_it_open>
 - Covid-19 Statistics API: <https://rapidapi.com/axisbits-axisbits-default/api/COVID-19%20Statistics>
 - Yelp Fusion API: <https://www.yelp.com/developers/documentation/v3>
 
+[back to top](#is-it-open)
+
 ## Collaborators
 
 - [Thad](https://github.com/thadkingcole)
 - [Everett](https://github.com/diuguide)
 - [Luke](https://github.com/TheWintersFox)
+
+[back to top](#is-it-open)
