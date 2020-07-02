@@ -396,6 +396,8 @@ function yelpSearch(locationStr, catsStr, radius) {
       }
       // start by remove results that may already be displayed
       $("#results").empty();
+      // remove more results button if it exists
+      $(".showMore").remove();
       // If our results are greater than 0, continue
       if (totalresults > 0) {
         // Display a header on the page with the number of results
