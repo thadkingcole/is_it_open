@@ -1,5 +1,7 @@
 # [Is It open?](https://thadkingcole.github.io/is_it_open)
 
+<img src="./assets/images/screenshot.png">
+
 ## Table of Contents
 
 - [Description](#Description)
