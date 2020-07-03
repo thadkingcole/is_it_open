@@ -298,7 +298,7 @@ function showBusiness(business) {
   const zipcode = business.location.zip_code;
   const website = business.url;
   // start other yelp API call to find open status
-  yelpOpenStatus(id);
+  setTimeout(yelpOpenStatus(id), 1000); // delays start of fucntion by 1 sec
 
   // Append our result into our page
   // create a div to hold the business information
@@ -307,7 +307,7 @@ function showBusiness(business) {
   const businessPic = $("<img>")
     .attr("src", image)
     .attr("alt", "name")
-    .css({"width": "200px", "border-radius": "20px"});
+    .css({ width: "200px", "border-radius": "20px" });
   // add our picture with a link to the yelp page
   businessEl.append(
     $("<a>").attr("href", website).attr("target", "_blank").append(businessPic)
@@ -408,7 +408,8 @@ function yelpSearch(locationStr, catsStr, radius) {
         // start with displaying the first 5 businesses
         let businessCtr = 0;
         for (businessCtr = 0; businessCtr < 5; businessCtr++) {
-          showBusiness(data.businesses[businessCtr]);
+          // delay start of function by 1 sec
+          setTimeout(showBusiness(data.businesses[businessCtr]), 1000);
         }
         // create button for displaying more results
         const moreButton = $("<button>")
@@ -420,7 +421,8 @@ function yelpSearch(locationStr, catsStr, radius) {
           // display the next 5 busniesses
           const stopValue = Math.min(businessCtr + 5, totalresults);
           for (businessCtr; businessCtr < stopValue; businessCtr++) {
-            showBusiness(data.businesses[businessCtr]);
+            // delay start of function by 1 sec
+            setTimeout(showBusiness(data.businesses[businessCtr]), 1000);
           }
           if (businessCtr < Math.min(yelpLimit, totalresults)) {
             // move button to bottom of results
