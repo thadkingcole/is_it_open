@@ -174,3 +174,7 @@ margin-bottom: 25px;
     display: inline;
     padding-right: 1rem;
 }
+
+#search-radius {
+    color: #777;
+}
