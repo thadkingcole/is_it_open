@@ -1,10 +1,17 @@
 // Global Variables
 const yelpLimit = 50; // only 5 will be displayed at a time
-// headers object used in yelp api ajax call
-const yelpHeaders = {
-  Authorization:
-    "Bearer TkYGxqcV6sGmv3RJSbT79S5bzAJdB2CRgJoEWmuGvd-Z9I5FRFzJ8VoQWGIGETFof5BJUGUQsWO6LqgwLscK6sEeLrbWthDRBzdIDuE3RynssWvbTg7szQ6oWvvzXnYx",
-};
+// API keys go here
+// which one gets used is determined randomly to allow for more API calls per second
+const yelpHeaders = [
+  { // Thad's API key
+    Authorization:
+      "Bearer TkYGxqcV6sGmv3RJSbT79S5bzAJdB2CRgJoEWmuGvd-Z9I5FRFzJ8VoQWGIGETFof5BJUGUQsWO6LqgwLscK6sEeLrbWthDRBzdIDuE3RynssWvbTg7szQ6oWvvzXnYx",
+  },
+  { // Everett's API key
+    Authorization:
+      "Bearer ZezIYWcUyx-cFTU27EVZcuCEk7gv74aKxQ1FKhgkgwjs20X04w3PmmPV6FkbyaEt8yTe2KsKomlcfzNfpfANvfUTRFULRSZKBjs2v6s_k478x9g3yjhzGrqKfqTyXnYx"
+  }
+];
 const rapidAPIKey = "0f227271cfmsh1a5be0f784ee16ap17ae07jsndfa955b03b56";
 const imageIndex = Math.floor(Math.random() * 7);
 let imageTag = $(".bg");
@@ -256,7 +263,7 @@ function yelpOpenStatus(businessID) {
 
   $.ajax({
     url: businessesURL,
-    headers: yelpHeaders,
+    headers: yelpHeaders[Math.floor(Math.random() * 2)],
     method: "GET",
     dataType: "json",
     success: function (response) {
@@ -375,7 +382,7 @@ function yelpSearch(locationStr, catsStr, radius) {
 
   $.ajax({
     url: businessSearchURL,
-    headers: yelpHeaders,
+    headers: yelpHeaders[Math.floor(Math.random() * 2)],
     method: "GET",
     dataType: "json",
     success: function (data) {
