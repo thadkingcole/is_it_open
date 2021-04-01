@@ -2,19 +2,6 @@
 
 [![screenshot](./public/images/screenshot.png)](https://thadkingcole.github.io/is_it_open)
 
-## Table of Contents
-
-- [Description](#Description)
-    - [Country](#Country)
-    - [State](#State)
-    - [Country](#county)
-    - [Yelp](#Yelp-Fusion-API)
-- [User Story](#user-story)
-- [Deployed Application](#deployed-application)
-- [Validation Link](#Validation-link)
-- [References](#references)
-- [Collaborators](#collaborators)
-
 ## Description
 
 With the current public health situation, people want to go outside, but it is difficult to find places that are open. This app will curate a list of restaurants, bars, and parks that are listed as open powered by a [YelpFusion API](https://www.yelp.com/developers/documentation/v3), while also giving the user the current number of covid19 cases in the search location. The app can grab data by multiple criteria.
